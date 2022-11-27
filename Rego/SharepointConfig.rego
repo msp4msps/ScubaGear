@@ -20,7 +20,8 @@ tests[{
     "Commandlet" : "Get-SPOTenant",
     "ActualValue" : SPOTenant.DefaultSharingLinkType,
     "ReportDetails" : ReportDetailsBoolean(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "3.3: Configure Data Access Control Lists"
 }] {
     SPOTenant := input.SPO_tenant
     Status := SPOTenant.DefaultSharingLinkType == 1
@@ -42,7 +43,8 @@ tests[{
     "Commandlet" : "Get-SPOTenant",
     "ActualValue" : SPOTenant.SharingCapability,
     "ReportDetails" : ReportDetailsBoolean(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "3.3: Configure Data Access Control Lists"
 }] {
     SPOTenant := input.SPO_tenant
     Status := SPOTenant.SharingCapability == 1
@@ -65,7 +67,8 @@ tests[{
     "Commandlet" : "",
     "ActualValue" : [],
     "ReportDetails" : "Currently cannot be checked automatically. See Sharepoint Secure Configuration Baseline policy 2.3 for instructions on manual check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "3.12: Segment Data Processing and Storage Based on Sensitivity"
 }] {
     true
 }
@@ -86,7 +89,8 @@ tests[{
     "Commandlet" : "Get-SPOTenant",
     "ActualValue" : SPOTenant.ExternalUserExpirationRequired,
     "ReportDetails" : ReportDetailsBoolean(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "6.2: Establish an Access Revoking Process"
 }] {
     SPOTenant := input.SPO_tenant
 	Status := SPOTenant.ExternalUserExpirationRequired == true
@@ -103,7 +107,8 @@ tests[{
     "Commandlet" : "Get-SPOTenant",
     "ActualValue" : SPOTenant.ExternalUserExpireInDays,
     "ReportDetails" : ReportDetailsBoolean(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "6.2: Establish an Access Revoking Process"
 }] {
     SPOTenant := input.SPO_tenant
 	Status := SPOTenant.ExternalUserExpireInDays == 30
@@ -125,7 +130,8 @@ tests[{
     "Commandlet" : "Get-SPOSite -Identity",
     "ActualValue" : SPOSite.DenyAddAndCustomizePages,
     "ReportDetails" : ReportDetailsBoolean(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "2.7: Allowlist Authorized Scripts"
 }] {
     SPOSite := input.SPO_site
     Status := SPOSite.DenyAddAndCustomizePages == 1

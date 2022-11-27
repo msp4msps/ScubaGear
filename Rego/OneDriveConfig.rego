@@ -20,7 +20,8 @@ tests[{
     "Commandlet" : "Get-SPOTenant",
     "ActualValue" : TenantInfo.OneDriveLoopSharingCapability,
     "ReportDetails" : ReportDetailsBoolean(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "3.3: Configure Data Access Control Lists"
 }] {
     TenantInfo := input.SPO_tenant_info
     Status := TenantInfo.OneDriveLoopSharingCapability == 1
@@ -42,7 +43,8 @@ tests[{
     "Commandlet" : "Get-SPOTenant",
     "ActualValue" : TenantInfo.ExternalUserExpirationRequired,
     "ReportDetails" : ReportDetailsBoolean(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "6.2: Establish an Access Revoking Process"
 }] {
     TenantInfo := input.SPO_tenant_info
     Status := TenantInfo.ExternalUserExpirationRequired== true
@@ -59,7 +61,8 @@ tests[{
     "Commandlet" : "Get-SPOTenant",
     "ActualValue" : TenantInfo.ExternalUserExpireInDays,
     "ReportDetails" : ReportDetailsBoolean(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "6.2: Establish an Access Revoking Process"
 }] {
     TenantInfo := input.SPO_tenant_info
     Status := TenantInfo.ExternalUserExpireInDays == 30
@@ -81,7 +84,8 @@ tests[{
     "Commandlet" : "Get-SPOTenant",
     "ActualValue" : TenantInfo.DefaultLinkPermission,
     "ReportDetails" : ReportDetailsBoolean(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "3.3: Configure Data Access Control Lists"
 }] {
     TenantInfo := input.SPO_tenant_info
     Status := TenantInfo.DefaultLinkPermission == 1
@@ -103,7 +107,8 @@ tests[{
     "Commandlet" : "Get-SPOTenant",
     "ActualValue" : ["Domain GUID: ", Domain],
     "ReportDetails" : ReportDetailsBoolean(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "3.3: Configure Data Access Control Lists"
 }] {
     TenantSyncInfo := input.Tenant_sync_info
     Domain := input.Expected_results.Owner
@@ -126,7 +131,8 @@ tests[{
     "Commandlet" : "Get-SPOTenant",
     "ActualValue" : TenantSyncInfo.BlockMacSync,
     "ReportDetails" : ReportDetailsBoolean(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "3.3: Configure Data Access Control Lists"
 }] {
     TenantSyncInfo := input.Tenant_sync_info
     Status := TenantSyncInfo.BlockMacSync == false
@@ -149,7 +155,8 @@ tests[{
     "Commandlet" : "",
     "ActualValue" : [],
     "ReportDetails" : "Currently cannot be checked automatically. See Onedrive Secure Configuration Baseline policy 2.6 for instructions on manual check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "3.3: Configure Data Access Control Lists"
 }] {
     true
 }
@@ -171,7 +178,8 @@ tests[{
     "Commandlet" : "",
     "ActualValue" : [],
     "ReportDetails" : "Currently cannot be checked automatically. See Onedrive Secure Configuration Baseline policy 2.7 for instructions on manual check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "4.8: Uninstall or Disable Unnecessary Services on Enterprise Assets and Software"
 }] {
     true
 }
