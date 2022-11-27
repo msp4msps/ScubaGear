@@ -81,7 +81,8 @@ ForEach ($Title in $Titles) {
             "Requirement"=$test.Requirement;
             "Result"=$Result;
             "Criticality"=$test.Criticality;
-            "Details"=$test.ReportDetails}
+            "Details"=$test.ReportDetails;
+            "CIS Controls" = $test.CISControls}
     }
 
     $Number = $Title.Number

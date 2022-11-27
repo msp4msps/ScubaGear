@@ -100,7 +100,8 @@ tests[{
     "Commandlet" : "Get-MgIdentityConditionalAccessPolicy",
     "ActualValue" : Policies2_1,
     "ReportDetails" : ReportFullDetailsArray(Policies2_1, DescriptionString),
-    "RequirementMet" : count(Policies2_1) > 0
+    "RequirementMet" : count(Policies2_1) > 0,
+    "CISControls" : "4.8 Uninstall or Disable Unnecessary Services on Enterprise Assets and Software"
 }] {
     DescriptionString := "conditional access policy(s) found that meet(s) all requirements"
     true
@@ -132,7 +133,8 @@ tests[{
     "Commandlet" : "Get-MgIdentityConditionalAccessPolicy",
     "ActualValue" : Policies2_2,
     "ReportDetails" : ReportDetailsArrayLicenseWarning(Policies2_2, DescriptionString),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "6.2: Establish an Access Revoking Process"
 }] {
     DescriptionString := "conditional access policy(s) found that meet(s) all requirements"
     Status := count(Policies2_2) > 0
@@ -150,7 +152,8 @@ tests[{
     "Commandlet" : "",
     "ActualValue" : [],
     "ReportDetails" : "Currently cannot be checked automatically. See Azure Active Directory Secure Configuration Baseline policy 2.2 for instructions on manual check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "17.1: Designate Personnel to Manage Incident Handling"
 }] {
     true
 }
@@ -181,7 +184,8 @@ tests[{
     "Commandlet" : "Get-MgIdentityConditionalAccessPolicy",
     "ActualValue" : Policies2_3,
     "ReportDetails" : ReportDetailsArrayLicenseWarning(Policies2_3, DescriptionString),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "6.7 Centralize Access Control"
 }] {
     DescriptionString := "conditional access policy(s) found that meet(s) all requirements"
     Status := count(Policies2_3) > 0
@@ -212,7 +216,8 @@ tests[{
     "Commandlet" : "Get-MgIdentityConditionalAccessPolicy",
     "ActualValue" : Policies2_4_1,
     "ReportDetails" : ReportDetailsArray(Policies2_4_1, DescriptionString),
-    "RequirementMet" : count(Policies2_4_1) > 0
+    "RequirementMet" : count(Policies2_4_1) > 0,
+    "CISControls" : "6.3: Require MFA for Externally-Exposed Applications"
 }]{
     DescriptionString := "conditional access policy(s) found that meet(s) all requirements.<br/>Note: Policy exclusions and additional policy conditions may still limit a policy's scope more narrowly than desired.  Recommend reviewing matching policies against the baseline statement to ensure a match between intent and implementation."
     true
@@ -231,7 +236,8 @@ tests[{
     "Commandlet" : "",
     "ActualValue" : [],
     "ReportDetails" : "Currently cannot be checked automatically. See Azure Active Directory Secure Configuration Baseline policy 2.4 for instructions on manual check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "6.3: Require MFA for Externally-Exposed Applications"
 }] {
     true
 }
@@ -249,7 +255,8 @@ tests[{
     "Commandlet" : "",
     "ActualValue" : [],
     "ReportDetails" : "Currently cannot be checked automatically. See Azure Active Directory Secure Configuration Baseline policy 2.4 for instructions on manual check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "6.3: Require MFA for Externally-Exposed Applications"
 }] {
     true
 }
@@ -267,7 +274,8 @@ tests[{
     "Commandlet" : "",
     "ActualValue" : [],
     "ReportDetails" : "Currently cannot be checked automatically. See Azure Active Directory Secure Configuration Baseline policy 2.4 for instructions on manual check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "4.8 Uninstall or Disable Unnecessary Services on Enterprise Assets and Software"
 }] {
     true
 }
@@ -289,7 +297,8 @@ tests[{
     "Commandlet" : "",
     "ActualValue" : [],
     "ReportDetails" : "Currently cannot be checked automatically. See Azure Active Directory Secure Configuration Baseline policy 2.5 for instructions on manual check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "8.2: Collect Audit Logs"
 }] {
     true
 }
@@ -306,7 +315,8 @@ tests[{
     "Commandlet" : "",
     "ActualValue" : [],
     "ReportDetails" : "Currently cannot be checked automatically. See Azure Active Directory Secure Configuration Baseline policy 2.5 for instructions on manual check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "8.9: Centralize Audit Logs"
 }] {
     true
 }
@@ -327,7 +337,9 @@ tests[{
     "Commandlet" : "Get-MgPolicyAuthorizationPolicy",
     "ActualValue" : AllowedCreate,
     "ReportDetails" : ReportDetailsBoolean(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "2.5 Allowlist Authorized Software"
+
 }] {
     AllowedCreate := input.authorization_policies.DefaultUserRolePermissions.AllowedToCreateApps
     Status := AllowedCreate == false
@@ -349,7 +361,8 @@ tests[{
     "Commandlet" : "Get-MgPolicyAuthorizationPolicy",
     "ActualValue" : ListValues,
     "ReportDetails" : ReportDetailsBoolean(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "2.5 Allowlist Authorized Software"
 }] {
     UserRolePermissionGrantList := input.authorization_policies.PermissionGrantPolicyIdsAssignedToDefaultUserRole
     ListValues := concat("", ["[", concat(",", UserRolePermissionGrantList), "]"])
@@ -367,7 +380,8 @@ tests[{
     "Commandlet" : "Get-MgPolicyAdminConsentRequestPolicy",
     "ActualValue" : Enabled,
     "ReportDetails" : ReportDetailsBoolean(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "3.3 Configure Data Access Control Lists"
 }] {
     Enabled := input.admin_consent_policies.IsEnabled
     Status := Enabled == true
@@ -384,7 +398,8 @@ tests[{
     "Commandlet" : "Get-MgDirectorySetting",
     "ActualValue" : Setting.Value,
     "ReportDetails" : ReportDetailsBoolean(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "2.5 Allowlist Authorized Software"
 }] {
     Setting := input.directory_settings[_].Values[_]
     Setting.Name == "EnableGroupSpecificConsent"
@@ -408,7 +423,8 @@ tests[{
     "Commandlet" : "",
     "ActualValue" : [],
     "ReportDetails" : "Currently cannot be checked automatically. See Azure Active Directory Secure Configuration Baseline policy 2.8 for instructions on manual check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "5.2: Use Unique Passwords"
 }] {
     true
 }
@@ -440,7 +456,8 @@ tests[{
     "Commandlet" : "Get-MgIdentityConditionalAccessPolicy",
     "ActualValue" : Policies2_9,
     "ReportDetails" : ReportFullDetailsArray(Policies2_9, DescriptionString),
-    "RequirementMet" : count(Policies2_9) > 0
+    "RequirementMet" : count(Policies2_9) > 0,
+    "CISControls" : "4.3: Configure Automatic Session Locking on Enterprise Assets"
 }] {
     DescriptionString := "conditional access policy(s) found that meet(s) all requirements"
     true
@@ -472,7 +489,8 @@ tests[{
     "Commandlet" : "Get-MgIdentityConditionalAccessPolicy",
     "ActualValue" : Policies2_10,
     "ReportDetails" : ReportFullDetailsArray(Policies2_10, DescriptionString),
-    "RequirementMet" : count(Policies2_10) > 0
+    "RequirementMet" : count(Policies2_10) > 0,
+    "CISControls" : "4.3: Configure Automatic Session Locking on Enterprise Assets"
 }] {
     DescriptionString := "conditional access policy(s) found that meet(s) all requirements"
     true
@@ -500,7 +518,8 @@ tests[{
     "Commandlet" : "Get-MgDirectoryRoleMember",
     "ActualValue" : GlobalAdmins,
     "ReportDetails" : ReportFullDetailsArray(GlobalAdmins, DescriptionString),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "5.1 Establish and Maintain an Inventory of accounts"
 }] {
     DescriptionString := "global admin(s) found"
     Conditions := [count(GlobalAdmins) < 5, count(GlobalAdmins) >= 2]
@@ -529,7 +548,8 @@ tests[{
     "Commandlet" : "Get-MgDirectoryRoleMember",
     "ActualValue" : AdminNames,
     "ReportDetails" : ReportFullDetailsArray(FederatedAdmins, DescriptionString),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "5.4 Restrict Administrator Privileges to Dedicated Administrator Accounts"
 }] {
     DescriptionString := "admin(s) that are not cloud-only found"
     Status := count(FederatedAdmins) == 0
@@ -563,7 +583,8 @@ tests[{
     "Commandlet" : "Get-MgIdentityConditionalAccessPolicy",
     "ActualValue" : Policies2_13,
     "ReportDetails" : ReportFullDetailsArray(Policies2_13, DescriptionString),
-    "RequirementMet" : count(Policies2_13) > 0
+    "RequirementMet" : count(Policies2_13) > 0,
+    "CISControls" : "6.5 Require MFA for Administrative Access"
 }] {
     DescriptionString := "conditional access policy(s) found that meet(s) all requirements"
     RoleNames := concat(", ", { Role.DisplayName | Role = input.privileged_roles[_] })
@@ -631,7 +652,8 @@ tests[{
     "Commandlet" : "Get-MgRoleManagementDirectoryRoleAssignmentScheduleInstance",
     "ActualValue" : RolesWithoutLimitedExpirationPeriod,
     "ReportDetails" : ReportDetailsArrayLicenseWarning(RolesWithoutLimitedExpirationPeriod, DescriptionString),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "6.1 Establish an Access Granting Process"
 }] {
     DescriptionString := "role(s) configured to allow permanent active assignment or expiration period too long"
     Conditions := [count(RolesWithoutLimitedExpirationPeriod) == 0, check_if_role_rules_exist]
@@ -656,7 +678,8 @@ tests[{
     "Commandlet" : "Get-MgRoleManagementDirectoryRoleAssignmentScheduleInstance",
     "ActualValue" : RolesAssignedOutsidePim,
     "ReportDetails" : ReportDetailsArrayLicenseWarning(RolesAssignedOutsidePim, DescriptionString),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "6.1 Establish an Access Granting Process"
 }] {
     DescriptionString := "role(s) assigned to users outside of PIM"
     Conditions := [count(RolesAssignedOutsidePim) == 0, check_if_role_rules_exist]
@@ -688,7 +711,8 @@ tests[{
     "Commandlet" : "Get-MgRoleManagementDirectoryRoleAssignmentScheduleInstance",
     "ActualValue" : RolesWithoutApprovalRequired,
     "ReportDetails" : ReportDetailsArrayLicenseWarning(RolesWithoutApprovalRequired, DescriptionString),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "6.1 Establish an Access Granting Process"
 }] {
     DescriptionString := "role(s) that do not require approval to activate found"
     Conditions := [count(RolesWithoutApprovalRequired) == 0, check_if_role_rules_exist]
@@ -729,7 +753,8 @@ tests[{
     "Commandlet" : "Get-MgRoleManagementDirectoryRoleAssignmentScheduleInstance",
     "ActualValue" : RolesWithoutAssignmentAlerts,
     "ReportDetails" : ReportDetailsArrayLicenseWarning(RolesWithoutAssignmentAlerts, DescriptionString),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "6.1 Establish an Access Granting Process"
 }] {
     DescriptionString := "role(s) without notification e-mail configured for role assignments found"
     RolesWithoutAssignmentAlerts := RolesWithoutActiveAssignmentAlerts | RolesWithoutEligibleAssignmentAlerts
@@ -758,7 +783,8 @@ tests[{
     "Commandlet" : "Get-MgRoleManagementDirectoryRoleAssignmentScheduleInstance",
     "ActualValue" : AdminsWithoutActivationAlert,
     "ReportDetails" : ReportDetailsBooleanLicenseWarning(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "6.1 Establish an Access Granting Process"
 }] {
     GlobalAdminNotMonitored := "Global Administrator" in AdminsWithoutActivationAlert
     Conditions := [GlobalAdminNotMonitored == false, check_if_role_rules_exist]
@@ -776,7 +802,8 @@ tests[{
     "Commandlet" : "Get-MgRoleManagementDirectoryRoleAssignmentScheduleInstance",
     "ActualValue" : NonGlobalAdminsWithoutActivationAlert,
     "ReportDetails" : ReportDetailsArrayLicenseWarning(NonGlobalAdminsWithoutActivationAlert, DescriptionString),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "6.1 Establish an Access Granting Process"
 }] {
     DescriptionString := "role(s) without notification e-mail configured for role activations found"
     NonGlobalAdminsWithoutActivationAlert = AdminsWithoutActivationAlert - {"Global Administrator"}
@@ -812,7 +839,8 @@ tests[{
     "Commandlet" : "Get-MgIdentityConditionalAccessPolicy",
     "ActualValue" : Policies2_17,
     "ReportDetails" : ReportFullDetailsArray(Policies2_17, DescriptionString),
-    "RequirementMet" : count(Policies2_17) > 0
+    "RequirementMet" : count(Policies2_17) > 0,
+    "CISControls" : "13.5: Manage Access Control for Remote Assets"
 }] {
     DescriptionString := "conditional access policy(s) found that meet(s) all requirements"
     true
@@ -834,7 +862,8 @@ tests[{
     "Commandlet" : "Get-MgPolicyAuthorizationPolicy",
     "ActualValue" : AllowedCreate,
     "ReportDetails" : ReportDetailsBoolean(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "6.8: Define and Maintain Role-Based Access Control"
 }] {
     AllowedCreate := input.authorization_policies.AllowInvitesFrom
     Status := AllowedCreate == "adminsAndGuestInviters"
@@ -852,7 +881,8 @@ tests[{
     "Commandlet" : "",
     "ActualValue" : [],
     "ReportDetails" : "Currently cannot be checked automatically. See Azure Active Directory Secure Configuration Baseline policy 2.18 for instructions on manual check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "6.1 Establish an Access Granting Process"
 }] {
     true
 }
@@ -875,7 +905,8 @@ tests[{
     "Commandlet" : "Get-MgPolicyAuthorizationPolicy",
     "ActualValue" : concat(" : ", ["Role ID", ExtractedRoleId ]),
     "ReportDetails" : ReportDetail,
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "6.1 Establish an Access Granting Process"
 }] {
     ExtractedRoleId := input.authorization_policies.GuestUserRoleId
     ReportDetail := concat("", ["Permission level set to \"", LevelAsString(ExtractedRoleId), "\""])
