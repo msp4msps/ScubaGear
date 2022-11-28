@@ -185,7 +185,7 @@ tests[{
     "ActualValue" : Policies2_3,
     "ReportDetails" : ReportDetailsArrayLicenseWarning(Policies2_3, DescriptionString),
     "RequirementMet" : Status,
-    "CISControls" : "6.7 Centralize Access Control"
+    "CISControls" : "6.2: Establish an Access Revoking Process"
 }] {
     DescriptionString := "conditional access policy(s) found that meet(s) all requirements"
     Status := count(Policies2_3) > 0
