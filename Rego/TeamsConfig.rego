@@ -50,7 +50,7 @@ tests[{
 	"Requirement" : "External participants SHOULD NOT be enabled to request control of shared desktops or windows in the Global (Org-wide default) meeting policy or in custom meeting policies if any exist",
     "Control" : "Teams 2.1",
 	"Criticality" : "Should",
-	"Commandlet" : "Get-CsTeamsMeetingPolicy",
+	"Commandlet" : ["Get-CsTeamsMeetingPolicy"],
 	"ActualValue" : Policies,
 	"ReportDetails" : ReportDetailsArray(Status, Policies, String),
 	"RequirementMet" : Status,
@@ -79,7 +79,7 @@ tests[{
 	"Requirement" : "Anonymous users SHALL NOT be enabled to start meetings in the Global (Org-wide default) meeting policy or in custom meeting policies if any exist",
 	"Control" : "Teams 2.2",
 	"Criticality" : "Shall",
-	"Commandlet" : "Get-CsTeamsMeetingPolicy",
+	"Commandlet" : ["Get-CsTeamsMeetingPolicy"],
 	"ActualValue" : Policies,
 	"ReportDetails" : ReportDetailsArray(Status, Policies, String),
 	"RequirementMet" : Status,
@@ -120,7 +120,7 @@ tests[{
 	"Requirement" : "Anonymous users, including dial-in users, SHOULD NOT be admitted automatically",
 	"Control" : "Teams 2.3",
 	"Criticality" : "Should",
-	"Commandlet" : "Get-CsTeamsMeetingPolicy",
+	"Commandlet" : ["Get-CsTeamsMeetingPolicy"],
 	"ActualValue" : [Policy.AutoAdmittedUsers, Policy.AllowPSTNUsersToBypassLobby],
 	"ReportDetails" : ReportDetails2_3(Policy),
 	"RequirementMet" : Status,
@@ -132,6 +132,18 @@ tests[{
 	Conditions := [Policy.AutoAdmittedUsers != "Everyone", Policy.AllowPSTNUsersToBypassLobby == false]
     Status := count([Condition | Condition = Conditions[_]; Condition == false]) == 0
 }
+
+tests[{
+	"Requirement" : "Anonymous users, including dial-in users, SHOULD NOT be admitted automatically",
+	"Control" : "Teams 2.3",
+	"Criticality" : "Should",
+	"Commandlet" : ["Get-CsTeamsMeetingPolicy"],
+	"ActualValue" : "PowerShell Error",
+	"ReportDetails" : "PowerShell Error",
+	"RequirementMet" : false
+}] {
+	count(input.meeting_policies) == 0
+}
 #--
 
 #
@@ -141,7 +153,7 @@ tests[{
 	"Requirement" : "Internal users SHOULD be admitted automatically",
 	"Control" : "Teams 2.3",
 	"Criticality" : "Should",
-	"Commandlet" : "Get-CsTeamsMeetingPolicy",
+	"Commandlet" : ["Get-CsTeamsMeetingPolicy"],
 	"ActualValue" : Policy.AutoAdmittedUsers,
 	"ReportDetails" : ReportDetailsBoolean(Status),
 	"RequirementMet" : Status,
@@ -151,6 +163,21 @@ tests[{
     # This control specifically states that non-global policies MAY be different, so filter for the global policy
 	Policy.Identity = "Global"
 	Status :=  Policy.AutoAdmittedUsers in ["EveryoneInCompany", "EveryoneInSameAndFederatedCompany", "EveryoneInCompanyExcludingGuests"]
+}
+
+#
+# Baseline 2.3: Policy 2
+#--
+tests[{
+	"Requirement" : "Internal users SHOULD be admitted automatically",
+	"Control" : "Teams 2.3",
+	"Criticality" : "Should",
+	"Commandlet" : ["Get-CsTeamsMeetingPolicy"],
+	"ActualValue" : "PowerShell Error",
+	"ReportDetails" : "PowerShell Error",
+	"RequirementMet" : false
+}] {
+	count(input.meeting_policies) == 0
 }
 #--
 
@@ -173,7 +200,7 @@ tests[{
 	"Requirement" : "External access SHALL only be enabled on a per-domain basis",
 	"Control" : "Teams 2.4",
 	"Criticality" : "Shall",
-	"Commandlet" : "Get-CsTenantFederationConfiguration",
+	"Commandlet" : ["Get-CsTenantFederationConfiguration"],
 	"ActualValue" : Policies,
 	"ReportDetails" : ReportDetailsArray(Status, Policies, String),
 	"RequirementMet" : Status,
@@ -197,7 +224,7 @@ tests[{
 	"Requirement" : "Anonymous users SHOULD be enabled to join meetings",
 	"Control" : "Teams 2.4",
 	"Criticality" : "Should",
-	"Commandlet" : "Get-CsTeamsMeetingPolicy",
+	"Commandlet" : ["Get-CsTeamsMeetingPolicy"],
 	"ActualValue" : MeetingsNotAllowingAnonJoin,
 	"ReportDetails" : ReportDetailsArray(Status, Policies, String),
 	"RequirementMet" : Status,
@@ -244,7 +271,7 @@ tests[{
 	"Requirement" : "Unmanaged users SHALL NOT be enabled to initiate contact with internal users",
 	"Control" : "Teams 2.5",
 	"Criticality" : "Shall",
-	"Commandlet" : "Get-CsTenantFederationConfiguration",
+	"Commandlet" : ["Get-CsTenantFederationConfiguration"],
 	"ActualValue" : Policies,
 	"ReportDetails" : ReportDetailsArray(Status, Policies, String),
 	"RequirementMet" : Status,
@@ -268,7 +295,7 @@ tests[{
 	"Requirement" : "Internal users SHOULD NOT be enabled to initiate contact with unmanaged users",
 	"Control" : "Teams 2.5",
 	"Criticality" : "Should",
-	"Commandlet" : "Get-CsTenantFederationConfiguration",
+	"Commandlet" : ["Get-CsTenantFederationConfiguration"],
 	"ActualValue" : Policies,
 	"ReportDetails" : ReportDetailsArray(Status, Policies, String),
 	"RequirementMet" : Status,
@@ -297,7 +324,7 @@ tests[{
 	"Requirement" : "Contact with Skype users SHALL be blocked",
 	"Control" : "Teams 2.6",
 	"Criticality" : "Shall",
-	"Commandlet" : "Get-CsTenantFederationConfiguration",
+	"Commandlet" : ["Get-CsTenantFederationConfiguration"],
 	"ActualValue" : Policies,
 	"ReportDetails" : ReportDetailsArray(Status, Policies, String),
 	"RequirementMet" : Status,
@@ -344,7 +371,7 @@ tests[{
 	"Requirement" : "Teams email integration SHALL be disabled",
 	"Control" : "Teams 2.7",
 	"Criticality" : "Shall",
-	"Commandlet" : "Get-CsTeamsClientConfiguration",
+	"Commandlet" : ["Get-CsTeamsClientConfiguration"],
 	"ActualValue" : [Policies, ServiceInstance],
 	"ReportDetails" : ReportDetails2_7(IsGCC, ComfirmCorrectConfig, Policies),
 	"RequirementMet" : Status,
@@ -357,6 +384,18 @@ tests[{
     IsGCC := indexof(ServiceInstance, "GOV") != -1
 	Conditions := [ComfirmCorrectConfig, IsGCC]
     Status := count([Condition | Condition = Conditions[_]; Condition == true]) > 0
+}
+
+tests[{
+	"Requirement" : "Teams email integration SHALL be disabled",
+	"Control" : "Teams 2.7",
+	"Criticality" : "Shall",
+	"Commandlet" : ["Get-CsTeamsClientConfiguration"],
+	"ActualValue" : "PowerShell Error",
+	"ReportDetails" : "PowerShell Error",
+	"RequirementMet" : false
+}] {
+    count(input.teams_tenant_info) == 0
 }
 #--
 
@@ -377,7 +416,7 @@ tests[{
 	"Requirement" : "Agencies SHOULD allow all apps published by Microsoft, but MAY block specific Microsoft apps as needed",
 	"Control" : "Teams 2.8",
 	"Criticality" : "Should",
-	"Commandlet" : "Get-CsTeamsAppPermissionPolicy",
+	"Commandlet" : ["Get-CsTeamsAppPermissionPolicy"],
 	"ActualValue" : Policies,
 	"ReportDetails" : ReportDetailsArray(Status, Policies, String),
 	"RequirementMet" : Status,
@@ -406,7 +445,7 @@ tests[{
 	"Requirement" : "Agencies SHOULD NOT allow installation of all third-party apps, but MAY allow specific apps as needed",
 	"Control" : "Teams 2.8",
 	"Criticality" : "Should",
-	"Commandlet" : "Get-CsTeamsAppPermissionPolicy",
+	"Commandlet" : ["Get-CsTeamsAppPermissionPolicy"],
 	"ActualValue" : Policies,
 	"ReportDetails" : ReportDetailsArray(Status, Policies, String),
 	"RequirementMet" : Status,
@@ -421,7 +460,7 @@ tests[{
 	"Requirement" : "Agencies SHOULD NOT allow installation of all custom apps, but MAY allow specific apps as needed",
 	"Control" : "Teams 2.8",
 	"Criticality" : "Should",
-	"Commandlet" : "Get-CsTeamsAppPermissionPolicy",
+	"Commandlet" : ["Get-CsTeamsAppPermissionPolicy"],
 	"ActualValue" : Policies,
 	"ReportDetails" :  ReportDetailsArray(Status, Policies, String),
 	"RequirementMet" : Status,
@@ -441,7 +480,7 @@ tests[{
     "Requirement" : "Agencies SHALL establish policy dictating the app review and approval process to be used by the agency",
     "Control" : "Teams 2.8",
     "Criticality" : "Shall/3rd Party",
-    "Commandlet" : "",
+    "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Cannot be checked automatically. See Microsoft Teams Secure Configuration Baseline policy 2.8 for instructions on manual check",
     "RequirementMet" : false,
@@ -463,16 +502,30 @@ tests[{
 	"Requirement" : "Cloud video recording SHOULD be disabled in the global (org-wide default) meeting policy",
 	"Control" : "Teams 2.9",
 	"Criticality" : "Should",
-	"Commandlet" : "Get-CsTeamsMeetingPolicy",
+	"Commandlet" : ["Get-CsTeamsMeetingPolicy"],
 	"ActualValue" : Policy.AllowCloudRecording,
 	"ReportDetails" : ReportDetailsBoolean(Status),
-	"ExpectedValue" : "false",
 	"RequirementMet" : Status,
 	"CISControls" : "4.6: Securely Manage Enterprise Assets and Software"
 }] {
 	Policy := input.meeting_policies[_]
 	Policy.Identity == "Global" # Filter: this control only applies to the Global policy
 	Status := Policy.AllowCloudRecording == false
+}
+
+#
+# Baseline 2.9: Policy 1
+#--
+tests[{
+	"Requirement" : "Cloud video recording SHOULD be disabled in the global (org-wide default) meeting policy",
+	"Control" : "Teams 2.9",
+	"Criticality" : "Should",
+	"Commandlet" : ["Get-CsTeamsMeetingPolicy"],
+	"ActualValue" : "PowerShell Error",
+	"ReportDetails" : "PowerShell Error",
+	"RequirementMet" : false
+}] {
+	count(input.meeting_policies) == 0
 }
 #--
 
@@ -486,10 +539,10 @@ PoliciesAllowingOutsideRegionStorage[Policy.Identity] {
 }
 
 tests[{
-	"Requirement" : "For all meeting polices that allow cloud recording, recordings SHOULD be stored inside the country of that agency’s tenant",
+	"Requirement" : "For all meeting polices that allow cloud recording, recordings SHOULD be stored inside the country of that agency's tenant",
 	"Control" : "Teams 2.9",
 	"Criticality" : "Should",
-	"Commandlet" : "Get-CsTeamsMeetingPolicy",
+	"Commandlet" : ["Get-CsTeamsMeetingPolicy"],
 	"ActualValue" : Policies,
 	"ReportDetails" : ReportDetailsArray(Status, Policies, String),
 	"RequirementMet" : Status,
@@ -513,7 +566,7 @@ tests[{
 	"Requirement" : "Record an event SHOULD be set to Organizer can record",
 	"Control" : "Teams 2.10",
 	"Criticality" : "Should",
-	"Commandlet" : "Get-CsTeamsMeetingPolicy",
+	"Commandlet" : ["Get-CsTeamsMeetingBroadcastPolicy"],
 	"ActualValue" : Policy.BroadcastRecordingMode,
 	"ReportDetails" : ReportDetailsBoolean(Status),
 	"RequirementMet" : Status,
@@ -522,6 +575,21 @@ tests[{
 	Policy := input.broadcast_policies[_]
 	Policy.Identity == "Global" # Filter: this control only applies to the Global policy
 	Status := Policy.BroadcastRecordingMode == "UserOverride"
+}
+
+#
+# Baseline 2.10: Policy 1
+#--
+tests[{
+	"Requirement" : "Record an event SHOULD be set to Organizer can record",
+	"Control" : "Teams 2.10",
+	"Criticality" : "Should",
+	"Commandlet" : ["Get-CsTeamsMeetingBroadcastPolicy"],
+	"ActualValue" : "PowerShell Error",
+	"ReportDetails" : "PowerShell Error",
+	"RequirementMet" : false
+}] {
+	count(input.broadcast_policies) == 0
 }
 #--
 
@@ -538,7 +606,7 @@ tests[{
     "Requirement" : "A DLP solution SHALL be enabled",
     "Control" : "Teams 2.11",
     "Criticality" : "Shall/3rd Party",
-    "Commandlet" : "",
+    "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
     "RequirementMet" : false,
@@ -556,7 +624,7 @@ tests[{
 	"Requirement" : "Agencies SHOULD use either the native DLP solution offered by Microsoft or a DLP solution that offers comparable services",
     "Control" : "Teams 2.11",
     "Criticality" : "Should/3rd Party",
-    "Commandlet" : "",
+    "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
     "RequirementMet" : false,
@@ -574,7 +642,7 @@ tests[{
 	"Requirement" : "The DLP solution SHALL protect Personally Identifiable Information (PII) and sensitive information, as defined by the agency. At a minimum, the sharing of credit card numbers, taxpayer Identification Numbers (TIN), and Social Security Numbers (SSN) via email SHALL be restricted",
     "Control" : "Teams 2.11",
     "Criticality" : "Shall/3rd Party",
-    "Commandlet" : "",
+    "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
     "RequirementMet" : false,
@@ -597,7 +665,7 @@ tests[{
 	"Requirement" : "Attachments included with Teams messages SHOULD be scanned for malware",
     "Control" : "Teams 2.12",
     "Criticality" : "Should/3rd Party",
-    "Commandlet" : "",
+    "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
     "RequirementMet" : false,
@@ -615,7 +683,7 @@ tests[{
 	"Requirement" : "Users SHOULD be prevented from opening or downloading files detected as malware",
     "Control" : "Teams 2.12",
     "Criticality" : "Should/3rd Party",
-    "Commandlet" : "",
+    "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
     "RequirementMet" : false,
@@ -638,7 +706,7 @@ tests[{
 	"Requirement" : "URL comparison with a block-list SHOULD be enabled",
     "Control" : "Teams 2.13",
     "Criticality" : "Should/3rd Party",
-    "Commandlet" : "",
+    "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
     "RequirementMet" : false,
@@ -656,7 +724,7 @@ tests[{
 	"Requirement" : "Direct download links SHOULD be scanned for malware",
     "Control" : "Teams 2.13",
     "Criticality" : "Should/3rd Party",
-    "Commandlet" : "",
+    "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
     "RequirementMet" : false,
@@ -674,7 +742,7 @@ tests[{
 	"Requirement" : "User click tracking SHOULD be enabled",
     "Control" : "Teams 2.13",
     "Criticality" : "Should/3rd Party",
-    "Commandlet" : "",
+    "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
     "RequirementMet" : false,

@@ -38,6 +38,8 @@ ReportFullDetailsArray(Array, String) = Details {
     Details := Description(Format(Array), concat(":<br/>", [String, TruncatedList]), TruncationWarning)
 }
 
+CapLink := "<a href='#caps'>View all CA policies</a>."
+
 ################
 # The report formatting functions below are for policies that check the required Azure AD Premium P2 license #
 ################
@@ -47,6 +49,16 @@ Aad2P2Licenses[ServicePlan.ServicePlanId] {
 }
 
 P2WarningString := "**NOTE: Your tenant does not have an Azure AD Premium P2 license, which is required for this feature**"
+
+ReportDetailsArrayLicenseWarningCap(Array, String) = Description if {
+  count(Aad2P2Licenses) > 0
+  Description :=  concat(". ", [ReportFullDetailsArray(Array, String), CapLink])
+}
+
+ReportDetailsArrayLicenseWarningCap(Array, String) = Description if {
+  count(Aad2P2Licenses) == 0
+  Description := P2WarningString
+}
 
 ReportDetailsArrayLicenseWarning(Array, String) = Description if {
   count(Aad2P2Licenses) > 0
@@ -97,9 +109,9 @@ tests[{
     "Requirement" : "Legacy authentication SHALL be blocked",
     "Control" : "AAD 2.1",
     "Criticality" : "Shall",
-    "Commandlet" : "Get-MgIdentityConditionalAccessPolicy",
+    "Commandlet" : ["Get-MgIdentityConditionalAccessPolicy"],
     "ActualValue" : Policies2_1,
-    "ReportDetails" : ReportFullDetailsArray(Policies2_1, DescriptionString),
+    "ReportDetails" : concat(". ", [ReportFullDetailsArray(Policies2_1, DescriptionString), CapLink]),
     "RequirementMet" : count(Policies2_1) > 0,
     "CISControls" : "4.8 Uninstall or Disable Unnecessary Services on Enterprise Assets and Software"
 }] {
@@ -130,9 +142,9 @@ tests[{
     "Requirement" : "Users detected as high risk SHALL be blocked",
     "Control" : "AAD 2.2",
     "Criticality" : "Shall",
-    "Commandlet" : "Get-MgIdentityConditionalAccessPolicy",
+    "Commandlet" : ["Get-MgIdentityConditionalAccessPolicy"],
     "ActualValue" : Policies2_2,
-    "ReportDetails" : ReportDetailsArrayLicenseWarning(Policies2_2, DescriptionString),
+    "ReportDetails" : ReportDetailsArrayLicenseWarningCap(Policies2_2, DescriptionString),
     "RequirementMet" : Status,
     "CISControls" : "6.2: Establish an Access Revoking Process"
 }] {
@@ -149,7 +161,7 @@ tests[{
     "Requirement" : "A notification SHOULD be sent to the administrator when high-risk users are detected",
     "Control" : "AAD 2.2",
     "Criticality" : "Should/Not-Implemented",
-    "Commandlet" : "",
+    "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Currently cannot be checked automatically. See Azure Active Directory Secure Configuration Baseline policy 2.2 for instructions on manual check",
     "RequirementMet" : false,
@@ -181,9 +193,9 @@ tests[{
     "Requirement" : "Sign-ins detected as high risk SHALL be blocked",
     "Control" : "AAD 2.3",
     "Criticality" : "Shall",
-    "Commandlet" : "Get-MgIdentityConditionalAccessPolicy",
+    "Commandlet" : ["Get-MgIdentityConditionalAccessPolicy"],
     "ActualValue" : Policies2_3,
-    "ReportDetails" : ReportDetailsArrayLicenseWarning(Policies2_3, DescriptionString),
+    "ReportDetails" : ReportDetailsArrayLicenseWarningCap(Policies2_3, DescriptionString),
     "RequirementMet" : Status,
     "CISControls" : "6.2: Establish an Access Revoking Process"
 }] {
@@ -213,13 +225,13 @@ tests[{
     "Requirement" : "MFA SHALL be required for all users",
     "Control" : "AAD 2.4",
     "Criticality" : "Shall",
-    "Commandlet" : "Get-MgIdentityConditionalAccessPolicy",
+    "Commandlet" : ["Get-MgIdentityConditionalAccessPolicy"],
     "ActualValue" : Policies2_4_1,
-    "ReportDetails" : ReportDetailsArray(Policies2_4_1, DescriptionString),
+    "ReportDetails" : concat(". ", [ReportFullDetailsArray(Policies2_4_1, DescriptionString), CapLink]),
     "RequirementMet" : count(Policies2_4_1) > 0,
     "CISControls" : "6.3: Require MFA for Externally-Exposed Applications"
 }]{
-    DescriptionString := "conditional access policy(s) found that meet(s) all requirements.<br/>Note: Policy exclusions and additional policy conditions may still limit a policy's scope more narrowly than desired.  Recommend reviewing matching policies against the baseline statement to ensure a match between intent and implementation."
+    DescriptionString := "conditional access policy(s) found that meet(s) all requirements"
     true
 }
 #--
@@ -233,7 +245,7 @@ tests[{
     "Requirement" : "Phishing-resistant MFA SHALL be used for all users",
     "Control" : "AAD 2.4",
     "Criticality" : "Shall/Not-Implemented",
-    "Commandlet" : "",
+    "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Currently cannot be checked automatically. See Azure Active Directory Secure Configuration Baseline policy 2.4 for instructions on manual check",
     "RequirementMet" : false,
@@ -252,7 +264,7 @@ tests[{
     "Requirement" : "If phishing-resistant MFA cannot be used, an MFA method from the list [see AAD baseline 2.4] SHALL be used in the interim",
     "Control" : "AAD 2.4",
     "Criticality" : "Shall/Not-Implemented",
-    "Commandlet" : "",
+    "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Currently cannot be checked automatically. See Azure Active Directory Secure Configuration Baseline policy 2.4 for instructions on manual check",
     "RequirementMet" : false,
@@ -271,7 +283,7 @@ tests[{
     "Requirement" : "SMS or Voice as the MFA method SHALL NOT be used",
     "Control" : "AAD 2.4",
     "Criticality" : "Shall/Not-Implemented",
-    "Commandlet" : "",
+    "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Currently cannot be checked automatically. See Azure Active Directory Secure Configuration Baseline policy 2.4 for instructions on manual check",
     "RequirementMet" : false,
@@ -294,11 +306,10 @@ tests[{
     "Requirement" : "The following critical logs SHALL be sent at a minimum: AuditLogs, SignInLogs, RiskyUsers, UserRiskEvents, NonInteractiveUserSignInLogs, ServicePrincipalSignInLogs, ADFSSignInLogs, RiskyServicePrincipals, ServicePrincipalRiskEvents",
     "Control" : "AAD 2.5",
     "Criticality" : "Shall/Not-Implemented",
-    "Commandlet" : "",
+    "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Currently cannot be checked automatically. See Azure Active Directory Secure Configuration Baseline policy 2.5 for instructions on manual check",
-    "RequirementMet" : false,
-    "CISControls" : "8.2: Collect Audit Logs"
+    "RequirementMet" : false
 }] {
     true
 }
@@ -312,7 +323,7 @@ tests[{
     "Requirement" : "The logs SHALL be sent to the agency's SOC for monitoring",
     "Control" : "AAD 2.5",
     "Criticality" : "Shall/Not-Implemented",
-    "Commandlet" : "",
+    "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Currently cannot be checked automatically. See Azure Active Directory Secure Configuration Baseline policy 2.5 for instructions on manual check",
     "RequirementMet" : false,
@@ -327,6 +338,18 @@ tests[{
 # Baseline 2.6 #
 ################
 
+AuthPoliciesBad_2_6[Policy.Id] {
+    Policy = input.authorization_policies[_]
+    Policy.DefaultUserRolePermissions.AllowedToCreateApps == true
+}
+
+AllAuthPoliciesAllowedCreate[{
+    "DefaultUser_AllowedToCreateApps" : Policy.DefaultUserRolePermissions.AllowedToCreateApps,
+    "PolicyId" : Policy.Id
+}] {
+    Policy := input.authorization_policies[_]
+}
+
 #
 # Baseline 2.6: Policy 1
 #--
@@ -334,15 +357,15 @@ tests[{
     "Requirement" : "Only administrators SHALL be allowed to register third-party applications",
     "Control" : "AAD 2.6",
     "Criticality" : "Shall",
-    "Commandlet" : "Get-MgPolicyAuthorizationPolicy",
-    "ActualValue" : AllowedCreate,
-    "ReportDetails" : ReportDetailsBoolean(Status),
+    "Commandlet" : ["Get-MgPolicyAuthorizationPolicy"],
+    "ActualValue" : {"all_allowed_create_values": AllAuthPoliciesAllowedCreate},
+    "ReportDetails" : ReportFullDetailsArray(BadPolicies, DescriptionString),
     "RequirementMet" : Status,
     "CISControls" : "2.5 Allowlist Authorized Software"
-
 }] {
-    AllowedCreate := input.authorization_policies.DefaultUserRolePermissions.AllowedToCreateApps
-    Status := AllowedCreate == false
+    BadPolicies := AuthPoliciesBad_2_6
+    Status := count(BadPolicies) == 0
+    DescriptionString := "authorization policies found that allow non-admin users to register third-party applications"
 }
 #--
 
@@ -354,56 +377,108 @@ tests[{
 #
 # Baseline 2.7: Policy 1
 #--
+BadDefaultGrantPolicies[Policy.Id] {
+    Policy = input.authorization_policies[_]
+    count(Policy.PermissionGrantPolicyIdsAssignedToDefaultUserRole) != 0
+}
+
+AllDefaultGrantPolicies[{
+    "DefaultUser_DefaultGrantPolicy" : Policy.PermissionGrantPolicyIdsAssignedToDefaultUserRole,
+    "PolicyId" : Policy.Id
+}] {
+    Policy := input.authorization_policies[_]
+}
+
 tests[{
     "Requirement" : "Only administrators SHALL be allowed to consent to third-party applications",
     "Control" : "AAD 2.7",
     "Criticality" : "Shall",
-    "Commandlet" : "Get-MgPolicyAuthorizationPolicy",
-    "ActualValue" : ListValues,
-    "ReportDetails" : ReportDetailsBoolean(Status),
+    "Commandlet" : ["Get-MgPolicyAuthorizationPolicy"],
+    "ActualValue" : {"all_grant_policy_values": AllDefaultGrantPolicies},
+    "ReportDetails" : ReportFullDetailsArray(BadPolicies, DescriptionString),
     "RequirementMet" : Status,
     "CISControls" : "2.5 Allowlist Authorized Software"
 }] {
-    UserRolePermissionGrantList := input.authorization_policies.PermissionGrantPolicyIdsAssignedToDefaultUserRole
-    ListValues := concat("", ["[", concat(",", UserRolePermissionGrantList), "]"])
-    Status := count(UserRolePermissionGrantList) == 0
+    BadPolicies := BadDefaultGrantPolicies
+    Status := count(BadPolicies) == 0
+    DescriptionString := "authorization policies found that allow non-admin users to consent to third-party applications"
 }
 #--
 
 #
 # Baseline 2.7: Policy 2
 #--
+BadConsentPolicies[Policy.Id] {
+    Policy := input.admin_consent_policies[_]
+    Policy.IsEnabled == false
+}
+
+AllConsentPolicies[{
+    "PolicyId" : Policy.Id,
+    "IsEnabled" : Policy.IsEnabled
+}] {
+    Policy := input.admin_consent_policies[_]
+}
+
+
 tests[{
     "Requirement" : "An admin consent workflow SHALL be configured",
     "Control" : "AAD 2.7",
     "Criticality" : "Shall",
-    "Commandlet" : "Get-MgPolicyAdminConsentRequestPolicy",
-    "ActualValue" : Enabled,
+    "Commandlet" : ["Get-MgPolicyAdminConsentRequestPolicy"],
+    "ActualValue" : {"all_consent_policies": AllConsentPolicies},
     "ReportDetails" : ReportDetailsBoolean(Status),
     "RequirementMet" : Status,
     "CISControls" : "3.3 Configure Data Access Control Lists"
 }] {
-    Enabled := input.admin_consent_policies.IsEnabled
-    Status := Enabled == true
+    BadPolicies := BadConsentPolicies
+    Status := count(BadPolicies) == 0
 }
 #--
 
 #
 # Baseline 2.7: Policy 3
 #--
+AllConsentSettings[{
+    "SettingsGroup": SettingGroup.DisplayName,
+    "Name": Setting.Name,
+    "Value": Setting.Value
+}] {
+    SettingGroup := input.directory_settings[_]
+    Setting := SettingGroup.Values[_]
+    Setting.Name == "EnableGroupSpecificConsent"
+}
+
+GoodConsentSettings[{
+    "SettingsGroup": Setting.SettingsGroup,
+    "Name": Setting.Name,
+    "Value": Setting.Value
+}] {
+    Setting := AllConsentSettings[_]
+    Setting.Value == "false"
+}
+
+BadConsentSettings[{
+    "SettingsGroup": Setting.SettingsGroup,
+    "Name": Setting.Name,
+    "Value": Setting.Value
+}] {
+    Setting := AllConsentSettings[_]
+    Setting.Value == "true"
+}
+
 tests[{
     "Requirement" : "Group owners SHALL NOT be allowed to consent to third-party applications",
     "Control" : "AAD 2.7",
     "Criticality" : "Shall",
-    "Commandlet" : "Get-MgDirectorySetting",
-    "ActualValue" : Setting.Value,
+    "Commandlet" : ["Get-MgDirectorySetting"],
+    "ActualValue" : AllConsentSettings,
     "ReportDetails" : ReportDetailsBoolean(Status),
     "RequirementMet" : Status,
     "CISControls" : "2.5 Allowlist Authorized Software"
 }] {
-    Setting := input.directory_settings[_].Values[_]
-    Setting.Name == "EnableGroupSpecificConsent"
-    Status := Setting.Value == "false"
+    Conditions := [count(BadConsentSettings) == 0, count(GoodConsentSettings) > 0]
+    Status := count([Condition | Condition = Conditions[_]; Condition == false]) == 0
 }
 #--
 
@@ -420,7 +495,7 @@ tests[{
     "Requirement" : "User passwords SHALL NOT expire",
     "Control" : "AAD 2.8",
     "Criticality" : "Shall/Not-Implemented",
-    "Commandlet" : "",
+    "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Currently cannot be checked automatically. See Azure Active Directory Secure Configuration Baseline policy 2.8 for instructions on manual check",
     "RequirementMet" : false,
@@ -453,9 +528,9 @@ tests[{
     "Requirement" : "Sign-in frequency SHALL be configured to 12 hours",
     "Control" : "AAD 2.9",
     "Criticality" : "Shall",
-    "Commandlet" : "Get-MgIdentityConditionalAccessPolicy",
+    "Commandlet" : ["Get-MgIdentityConditionalAccessPolicy"],
     "ActualValue" : Policies2_9,
-    "ReportDetails" : ReportFullDetailsArray(Policies2_9, DescriptionString),
+    "ReportDetails" : concat(". ", [ReportFullDetailsArray(Policies2_9, DescriptionString), CapLink]),
     "RequirementMet" : count(Policies2_9) > 0,
     "CISControls" : "4.3: Configure Automatic Session Locking on Enterprise Assets"
 }] {
@@ -486,9 +561,9 @@ tests[{
     "Requirement" : "Browser sessions SHALL not be persistent",
     "Control" : "AAD 2.10",
     "Criticality" : "Shall",
-    "Commandlet" : "Get-MgIdentityConditionalAccessPolicy",
+    "Commandlet" : ["Get-MgIdentityConditionalAccessPolicy"],
     "ActualValue" : Policies2_10,
-    "ReportDetails" : ReportFullDetailsArray(Policies2_10, DescriptionString),
+    "ReportDetails" : concat(". ", [ReportFullDetailsArray(Policies2_10, DescriptionString), CapLink]),
     "RequirementMet" : count(Policies2_10) > 0,
     "CISControls" : "4.3: Configure Automatic Session Locking on Enterprise Assets"
 }] {
@@ -515,7 +590,7 @@ tests[{
     "Requirement" : "A minimum of two users and a maximum of four users SHALL be provisioned with the Global Administrator role",
     "Control" : "AAD 2.11",
     "Criticality" : "Shall",
-    "Commandlet" : "Get-MgDirectoryRoleMember",
+    "Commandlet" : ["Get-MgSubscribedSku", "Get-PrivilegedUser"],
     "ActualValue" : GlobalAdmins,
     "ReportDetails" : ReportFullDetailsArray(GlobalAdmins, DescriptionString),
     "RequirementMet" : Status,
@@ -545,7 +620,7 @@ tests[{
     "Requirement" : "Users that need to be assigned to highly privileged Azure AD roles SHALL be provisioned cloud-only accounts that are separate from the on-premises directory or other federated identity providers",
     "Control" : "AAD 2.12",
     "Criticality" : "Shall",
-    "Commandlet" : "Get-MgDirectoryRoleMember",
+    "Commandlet" : ["Get-MgSubscribedSku", "Get-PrivilegedUser"],
     "ActualValue" : AdminNames,
     "ReportDetails" : ReportFullDetailsArray(FederatedAdmins, DescriptionString),
     "RequirementMet" : Status,
@@ -580,14 +655,13 @@ tests[{
     "Requirement" : "MFA SHALL be required for user access to highly privileged roles",
     "Control" : "AAD 2.13",
     "Criticality" : "Shall",
-    "Commandlet" : "Get-MgIdentityConditionalAccessPolicy",
+    "Commandlet" : ["Get-MgSubscribedSku", "Get-PrivilegedRole", "Get-MgIdentityConditionalAccessPolicy"],
     "ActualValue" : Policies2_13,
-    "ReportDetails" : ReportFullDetailsArray(Policies2_13, DescriptionString),
+    "ReportDetails" : concat(". ", [ReportFullDetailsArray(Policies2_13, DescriptionString), CapLink]),
     "RequirementMet" : count(Policies2_13) > 0,
     "CISControls" : "6.5 Require MFA for Administrative Access"
 }] {
     DescriptionString := "conditional access policy(s) found that meet(s) all requirements"
-    RoleNames := concat(", ", { Role.DisplayName | Role = input.privileged_roles[_] })
 }
 #--
 
@@ -649,7 +723,7 @@ tests[{
     "Requirement" : "Permanent active role assignments SHALL NOT be allowed for highly privileged roles. Active assignments SHALL have an expiration period.",
     "Control" : "AAD 2.14",
     "Criticality" : "Shall",
-    "Commandlet" : "Get-MgRoleManagementDirectoryRoleAssignmentScheduleInstance",
+    "Commandlet" : ["Get-MgSubscribedSku", "Get-PrivilegedRole"],
     "ActualValue" : RolesWithoutLimitedExpirationPeriod,
     "ReportDetails" : ReportDetailsArrayLicenseWarning(RolesWithoutLimitedExpirationPeriod, DescriptionString),
     "RequirementMet" : Status,
@@ -675,7 +749,7 @@ tests[{
     "Requirement" : "Provisioning of users to highly privileged roles SHALL NOT occur outside of a PAM system, such as the Azure AD PIM service, because this bypasses the controls the PAM system provides",
     "Control" : "AAD 2.14",
     "Criticality" : "Shall",
-    "Commandlet" : "Get-MgRoleManagementDirectoryRoleAssignmentScheduleInstance",
+    "Commandlet" : ["Get-MgSubscribedSku", "Get-PrivilegedRole"],
     "ActualValue" : RolesAssignedOutsidePim,
     "ReportDetails" : ReportDetailsArrayLicenseWarning(RolesAssignedOutsidePim, DescriptionString),
     "RequirementMet" : Status,
@@ -708,7 +782,7 @@ tests[{
     "Requirement" : "Activation of highly privileged roles SHOULD require approval",
     "Control" : "AAD 2.15",
     "Criticality" : "Should",
-    "Commandlet" : "Get-MgRoleManagementDirectoryRoleAssignmentScheduleInstance",
+    "Commandlet" : ["Get-MgSubscribedSku", "Get-PrivilegedRole"],
     "ActualValue" : RolesWithoutApprovalRequired,
     "ReportDetails" : ReportDetailsArrayLicenseWarning(RolesWithoutApprovalRequired, DescriptionString),
     "RequirementMet" : Status,
@@ -750,7 +824,7 @@ tests[{
     "Requirement" : "Eligible and Active highly privileged role assignments SHALL trigger an alert",
     "Control" : "AAD 2.16",
     "Criticality" : "Shall",
-    "Commandlet" : "Get-MgRoleManagementDirectoryRoleAssignmentScheduleInstance",
+    "Commandlet" : ["Get-MgSubscribedSku", "Get-PrivilegedRole"],
     "ActualValue" : RolesWithoutAssignmentAlerts,
     "ReportDetails" : ReportDetailsArrayLicenseWarning(RolesWithoutAssignmentAlerts, DescriptionString),
     "RequirementMet" : Status,
@@ -780,7 +854,7 @@ tests[{
     "Requirement" : "User activation of the Global Administrator role SHALL trigger an alert",
     "Control" : "AAD 2.16",
     "Criticality" : "Shall",
-    "Commandlet" : "Get-MgRoleManagementDirectoryRoleAssignmentScheduleInstance",
+    "Commandlet" : ["Get-MgSubscribedSku", "Get-PrivilegedRole"],
     "ActualValue" : AdminsWithoutActivationAlert,
     "ReportDetails" : ReportDetailsBooleanLicenseWarning(Status),
     "RequirementMet" : Status,
@@ -799,7 +873,7 @@ tests[{
     "Requirement" : "User activation of other highly privileged roles SHOULD trigger an alert",
     "Control" : "AAD 2.16",
     "Criticality" : "Should",
-    "Commandlet" : "Get-MgRoleManagementDirectoryRoleAssignmentScheduleInstance",
+    "Commandlet" : ["Get-MgSubscribedSku", "Get-PrivilegedRole"],
     "ActualValue" : NonGlobalAdminsWithoutActivationAlert,
     "ReportDetails" : ReportDetailsArrayLicenseWarning(NonGlobalAdminsWithoutActivationAlert, DescriptionString),
     "RequirementMet" : Status,
@@ -836,9 +910,9 @@ tests[{
     "Requirement" : "Managed devices SHOULD be required for authentication",
     "Control" : "AAD 2.17",
     "Criticality" : "Should",
-    "Commandlet" : "Get-MgIdentityConditionalAccessPolicy",
+    "Commandlet" : ["Get-MgIdentityConditionalAccessPolicy"],
     "ActualValue" : Policies2_17,
-    "ReportDetails" : ReportFullDetailsArray(Policies2_17, DescriptionString),
+    "ReportDetails" : concat(". ", [ReportFullDetailsArray(Policies2_17, DescriptionString), CapLink]),
     "RequirementMet" : count(Policies2_17) > 0,
     "CISControls" : "13.5: Manage Access Control for Remote Assets"
 }] {
@@ -855,18 +929,36 @@ tests[{
 #
 # Baseline 2.18: Policy 1
 #--
+
+AuthPoliciesBadAllowInvites[Policy.Id] {
+    Policy = input.authorization_policies[_]
+    Policy.AllowInvitesFrom != "adminsAndGuestInviters"
+}
+
+AllowInvitesByPolicy[concat("", ["\"", Policy.AllowInvitesFrom, "\"", " (", Policy.Id, ")"])] {
+    Policy := input.authorization_policies[_]
+}
+
+AllAuthPoliciesAllowInvites[{
+    "AllowInvitesFromValue" : Policy.AllowInvitesFrom,
+    "PolicyId" : Policy.Id
+}] {
+    Policy := input.authorization_policies[_]
+}
+
 tests[{
     "Requirement" : "Only users with the Guest Inviter role SHOULD be able to invite guest users",
     "Control" : "AAD 2.18",
     "Criticality" : "Should",
-    "Commandlet" : "Get-MgPolicyAuthorizationPolicy",
-    "ActualValue" : AllowedCreate,
-    "ReportDetails" : ReportDetailsBoolean(Status),
+    "Commandlet" : ["Get-MgPolicyAuthorizationPolicy"],
+    "ActualValue" : {"all_allow_invite_values": AllAuthPoliciesAllowInvites},
+    "ReportDetails" : ReportDetail,
     "RequirementMet" : Status,
     "CISControls" : "6.8: Define and Maintain Role-Based Access Control"
 }] {
-    AllowedCreate := input.authorization_policies.AllowInvitesFrom
-    Status := AllowedCreate == "adminsAndGuestInviters"
+    BadPolicies := AuthPoliciesBadAllowInvites
+    Status := count(BadPolicies) == 0
+    ReportDetail := concat("", ["Permission level set to ", concat(", ", AllowInvitesByPolicy)])
 }
 #--
 
@@ -878,7 +970,7 @@ tests[{
     "Requirement" : "Guest invites SHOULD only be allowed to specific external domains that have been authorized by the agency for legitimate business purposes",
     "Control" : "AAD 2.18",
     "Criticality" : "Should/Not-Implemented",
-    "Commandlet" : "",
+    "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Currently cannot be checked automatically. See Azure Active Directory Secure Configuration Baseline policy 2.18 for instructions on manual check",
     "RequirementMet" : false,
@@ -891,25 +983,45 @@ tests[{
 #
 # Baseline 2.18: Policy 3
 #--
+# must hardcode the ID. See
+# https://docs.microsoft.com/en-us/azure/active-directory/enterprise-users/users-restrict-guest-permissions
 LevelAsString(Id) := "Restricted access" if {Id == "2af84b1e-32c8-42b7-82bc-daa82404023b"}
 LevelAsString(Id) := "Limited access" if {Id == "10dae51f-b6af-4016-8d66-8c2a99b929b3"}
 LevelAsString(Id) := "Same as member users" if {Id == "a0b1b346-4d3e-4e8b-98f8-753987be4970"}
 LevelAsString(Id) := "Unknown" if {not Id in ["2af84b1e-32c8-42b7-82bc-daa82404023b", "10dae51f-b6af-4016-8d66-8c2a99b929b3", "a0b1b346-4d3e-4e8b-98f8-753987be4970"]}
 
-# must hardcode the ID. See
-# https://docs.microsoft.com/en-us/azure/active-directory/enterprise-users/users-restrict-guest-permissions
+AuthPoliciesBadRoleId[Policy.Id] {
+    Policy = input.authorization_policies[_]
+    not Policy.GuestUserRoleId in ["10dae51f-b6af-4016-8d66-8c2a99b929b3", "2af84b1e-32c8-42b7-82bc-daa82404023b"]
+}
+
+AllAuthPoliciesRoleIds[{
+    "GuestUserRoleIdString" : Level,
+    "GuestUserRoleId" : Policy.GuestUserRoleId,
+    "Id" : Policy.Id
+}] {
+    Policy = input.authorization_policies[_]
+    Level := LevelAsString(Policy.GuestUserRoleId)
+}
+
+RoleIdByPolicy[concat("", ["\"", Level, "\"", " (", Policy.Id, ")"])] {
+    Policy := input.authorization_policies[_]
+    Level := LevelAsString(Policy.GuestUserRoleId)
+}
+
+
 tests[{
     "Requirement" : "Guest users SHOULD have limited access to Azure AD directory objects",
     "Control" : "AAD 2.18",
     "Criticality" : "Should",
-    "Commandlet" : "Get-MgPolicyAuthorizationPolicy",
-    "ActualValue" : concat(" : ", ["Role ID", ExtractedRoleId ]),
+    "Commandlet" : ["Get-MgPolicyAuthorizationPolicy"],
+    "ActualValue" : {"all_roleid_values" : AllAuthPoliciesRoleIds},
     "ReportDetails" : ReportDetail,
     "RequirementMet" : Status,
     "CISControls" : "6.1 Establish an Access Granting Process"
 }] {
-    ExtractedRoleId := input.authorization_policies.GuestUserRoleId
-    ReportDetail := concat("", ["Permission level set to \"", LevelAsString(ExtractedRoleId), "\""])
-    Status := ExtractedRoleId in ["10dae51f-b6af-4016-8d66-8c2a99b929b3", "2af84b1e-32c8-42b7-82bc-daa82404023b"]
+    BadPolicies := AuthPoliciesBadRoleId
+    Status := count(BadPolicies) == 0
+    ReportDetail := concat("", ["Permission level set to ", concat(", ", RoleIdByPolicy)])
 }
 #--

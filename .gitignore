@@ -7,6 +7,7 @@
 # msc
 *.xml
 *.cer
+*.exe
 /M365/*.xml
 /PowerShell/output
 /PowerShell/example
@@ -15,3 +16,14 @@
 /example
 /M365Baseline*
 /Reports*
+/utils/Reports*
+/utils/output
+/utils/M365Baseline*
+
+# IDE
+/.vscode
+
+# Reports
+**/M365BaselineConformance*
+/Testing/Functional/Reports*
+/Testing/Functional/Archive*
