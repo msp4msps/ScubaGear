@@ -53,7 +53,8 @@ tests[{
 	"Commandlet" : ["Get-CsTeamsMeetingPolicy"],
 	"ActualValue" : Policies,
 	"ReportDetails" : ReportDetailsArray(Status, Policies, String),
-	"RequirementMet" : Status
+	"RequirementMet" : Status,
+	"CISControls" : "6.1: Establish an Access Granting Process"
 }] {
 	Policies := MeetingsAllowingExternalControl
 	String := "meeting policy(ies) found that allows external control:"
@@ -81,7 +82,8 @@ tests[{
 	"Commandlet" : ["Get-CsTeamsMeetingPolicy"],
 	"ActualValue" : Policies,
 	"ReportDetails" : ReportDetailsArray(Status, Policies, String),
-	"RequirementMet" : Status
+	"RequirementMet" : Status,
+	"CISControls" : "6.1: Establish an Access Granting Process"
 }] {
 	Policies := MeetingsAllowingAnonStart
 	String := "meeting policy(ies) found that allows anonymous users to start meetings:"
@@ -121,7 +123,8 @@ tests[{
 	"Commandlet" : ["Get-CsTeamsMeetingPolicy"],
 	"ActualValue" : [Policy.AutoAdmittedUsers, Policy.AllowPSTNUsersToBypassLobby],
 	"ReportDetails" : ReportDetails2_3(Policy),
-	"RequirementMet" : Status
+	"RequirementMet" : Status,
+	"CISControls" : "6.1: Establish an Access Granting Process"
 }] {
 	Policy := input.meeting_policies[_]
 	# This control specifically states that non-global policies MAY be different, so filter for the global policy
@@ -137,7 +140,8 @@ tests[{
 	"Commandlet" : ["Get-CsTeamsMeetingPolicy"],
 	"ActualValue" : "PowerShell Error",
 	"ReportDetails" : "PowerShell Error",
-	"RequirementMet" : false
+	"RequirementMet" : false,
+	"CISControls" : "6.1: Establish an Access Granting Process"
 }] {
 	count(input.meeting_policies) == 0
 }
@@ -153,7 +157,8 @@ tests[{
 	"Commandlet" : ["Get-CsTeamsMeetingPolicy"],
 	"ActualValue" : Policy.AutoAdmittedUsers,
 	"ReportDetails" : ReportDetailsBoolean(Status),
-	"RequirementMet" : Status
+	"RequirementMet" : Status,
+	"CISControls" : "6.1: Establish an Access Granting Process"
 }] {
 	Policy := input.meeting_policies[_]
     # This control specifically states that non-global policies MAY be different, so filter for the global policy
@@ -171,7 +176,8 @@ tests[{
 	"Commandlet" : ["Get-CsTeamsMeetingPolicy"],
 	"ActualValue" : "PowerShell Error",
 	"ReportDetails" : "PowerShell Error",
-	"RequirementMet" : false
+	"RequirementMet" : false,
+	"CISControls" : "6.1: Establish an Access Granting Process"
 }] {
 	count(input.meeting_policies) == 0
 }
@@ -199,7 +205,8 @@ tests[{
 	"Commandlet" : ["Get-CsTenantFederationConfiguration"],
 	"ActualValue" : Policies,
 	"ReportDetails" : ReportDetailsArray(Status, Policies, String),
-	"RequirementMet" : Status
+	"RequirementMet" : Status,
+	"CISControls" : "3.3 Configure Data Access Control Lists"
 }] {
     Policies := ExternalAccessConfig
 	String := "meeting policy(ies) that allow external access across all domains:"
@@ -222,7 +229,8 @@ tests[{
 	"Commandlet" : ["Get-CsTeamsMeetingPolicy"],
 	"ActualValue" : MeetingsNotAllowingAnonJoin,
 	"ReportDetails" : ReportDetailsArray(Status, Policies, String),
-	"RequirementMet" : Status
+	"RequirementMet" : Status,
+	"CISControls" : "6.1: Establish an Access Granting Process"
 }] {
 	Policies := MeetingsNotAllowingAnonJoin
 	String := "meeting policy(ies) found that don't allow anonymous users to join meetings:"
@@ -268,7 +276,8 @@ tests[{
 	"Commandlet" : ["Get-CsTenantFederationConfiguration"],
 	"ActualValue" : Policies,
 	"ReportDetails" : ReportDetailsArray(Status, Policies, String),
-	"RequirementMet" : Status
+	"RequirementMet" : Status,
+	"CISControls" : "6.1: Establish an Access Granting Process"
 }] {
 	Policies := FederationConfiguration
     String := "Configuration allowed unmanaged users to initiate contact with internal user across domains:"
@@ -291,7 +300,8 @@ tests[{
 	"Commandlet" : ["Get-CsTenantFederationConfiguration"],
 	"ActualValue" : Policies,
 	"ReportDetails" : ReportDetailsArray(Status, Policies, String),
-	"RequirementMet" : Status
+	"RequirementMet" : Status,
+	"CISControls" : "6.1: Establish an Access Granting Process"
 }] {
 	Policies := InternalCannotenable
 	String := "Internal users are enabled to initiate contact with unmanaged users across domains:"
@@ -319,7 +329,8 @@ tests[{
 	"Commandlet" : ["Get-CsTenantFederationConfiguration"],
 	"ActualValue" : Policies,
 	"ReportDetails" : ReportDetailsArray(Status, Policies, String),
-	"RequirementMet" : Status
+	"RequirementMet" : Status,
+	"CISControls" : "6.1: Establish an Access Granting Process"
 }] {
 	Policies := SkpyeBlocConfig
 	String := "domains that allows contact with Skype users:"
@@ -364,7 +375,8 @@ tests[{
 	"Commandlet" : ["Get-CsTeamsClientConfiguration", "Get-CsTenant"],
 	"ActualValue" : {"ClientConfig": input.client_configuration, "AssignedPlans": AssignedPlans},
 	"ReportDetails" : ReportDetails2_7(IsGCC, IsEnabled),
-	"RequirementMet" : Status
+	"RequirementMet" : Status,
+	"CISControls" : "4.8: Uninstall or Disable Unnecessary Services on Enterprise Assets and Software"
 }] {
 	# According to Get-CsTeamsClientConfiguration, is team email integration enabled?
     IsEnabled := count(ConfigsAllowingEmail) == 0
@@ -402,7 +414,8 @@ tests[{
 	"Commandlet" : ["Get-CsTeamsAppPermissionPolicy"],
 	"ActualValue" : Policies,
 	"ReportDetails" : ReportDetailsArray(Status, Policies, String),
-	"RequirementMet" : Status
+	"RequirementMet" : Status,
+	"CISControls" : "2.5: Allowlist Authorized Software"
 }] {
 	Policies := PoliciesBlockingDefaultApps
 	String := "meeting policy(ies) found that block Microsoft Apps by default:"
@@ -430,7 +443,8 @@ tests[{
 	"Commandlet" : ["Get-CsTeamsAppPermissionPolicy"],
 	"ActualValue" : Policies,
 	"ReportDetails" : ReportDetailsArray(Status, Policies, String),
-	"RequirementMet" : Status
+	"RequirementMet" : Status,
+	"CISControls" : "2.5: Allowlist Authorized Software"
 }] {
 	Policies := PoliciesAllowingGlobalApps
 	String := "meeting policy(ies) found that allow third-party apps by default:"
@@ -444,7 +458,8 @@ tests[{
 	"Commandlet" : ["Get-CsTeamsAppPermissionPolicy"],
 	"ActualValue" : Policies,
 	"ReportDetails" :  ReportDetailsArray(Status, Policies, String),
-	"RequirementMet" : Status
+	"RequirementMet" : Status,
+	"CISControls" : "2.5: Allowlist Authorized Software"
 }] {
 	Policies := PoliciesAllowingCustomApps
 	String := "meeting policy(ies) found that allow custom apps by default:"
@@ -463,7 +478,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Cannot be checked automatically. See Microsoft Teams Secure Configuration Baseline policy 2.8 for instructions on manual check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+	"CISControls" : "2.5: Allowlist Authorized Software"
 }] {
     true
 }
@@ -484,7 +500,8 @@ tests[{
 	"Commandlet" : ["Get-CsTeamsMeetingPolicy"],
 	"ActualValue" : Policy.AllowCloudRecording,
 	"ReportDetails" : ReportDetailsBoolean(Status),
-	"RequirementMet" : Status
+	"RequirementMet" : Status,
+	"CISControls" : "4.6: Securely Manage Enterprise Assets and Software"
 }] {
 	Policy := input.meeting_policies[_]
 	Policy.Identity == "Global" # Filter: this control only applies to the Global policy
@@ -501,7 +518,8 @@ tests[{
 	"Commandlet" : ["Get-CsTeamsMeetingPolicy"],
 	"ActualValue" : "PowerShell Error",
 	"ReportDetails" : "PowerShell Error",
-	"RequirementMet" : false
+	"RequirementMet" : false,
+	"CISControls" : "4.6: Securely Manage Enterprise Assets and Software"
 }] {
 	count(input.meeting_policies) == 0
 }
@@ -523,7 +541,8 @@ tests[{
 	"Commandlet" : ["Get-CsTeamsMeetingPolicy"],
 	"ActualValue" : Policies,
 	"ReportDetails" : ReportDetailsArray(Status, Policies, String),
-	"RequirementMet" : Status
+	"RequirementMet" : Status,
+	"CISControls" : "3.1: Establish and Maintain a Data Management Process"
 }] {
 	Policies := PoliciesAllowingOutsideRegionStorage
 	String := "meeting policy(ies) found that allow cloud recording and storage outside of the tenant's region:"
@@ -546,7 +565,8 @@ tests[{
 	"Commandlet" : ["Get-CsTeamsMeetingBroadcastPolicy"],
 	"ActualValue" : Policy.BroadcastRecordingMode,
 	"ReportDetails" : ReportDetailsBoolean(Status),
-	"RequirementMet" : Status
+	"RequirementMet" : Status,
+	"CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
 	Policy := input.broadcast_policies[_]
 	Policy.Identity == "Global" # Filter: this control only applies to the Global policy
@@ -563,7 +583,8 @@ tests[{
 	"Commandlet" : ["Get-CsTeamsMeetingBroadcastPolicy"],
 	"ActualValue" : "PowerShell Error",
 	"ReportDetails" : "PowerShell Error",
-	"RequirementMet" : false
+	"RequirementMet" : false,
+	"CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
 	count(input.broadcast_policies) == 0
 }
@@ -585,7 +606,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+	"CISControls" : "3.13: Deploy a Data Loss Prevention Solution"
 }] {
     true
 }
@@ -602,7 +624,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+	"CISControls" : "3.13: Deploy a Data Loss Prevention Solution"
 }] {
     true
 }
@@ -619,7 +642,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+	"CISControls" : "3.13: Deploy a Data Loss Prevention Solution"
 }] {
     true
 }
@@ -641,7 +665,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+	"CISControls" : "10.1: Deploy and Maintain Anti-Malware Software"
 }] {
     true
 }
@@ -658,7 +683,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+	"CISControls" : "10.1: Deploy and Maintain Anti-Malware Software"
 }] {
     true
 }
@@ -680,7 +706,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+	"CISControls" : "9.3: Maintain and Enforce Network-Based URL Filters"
 }] {
     true
 }
@@ -697,7 +724,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+	"CISControls" : "9.3: Maintain and Enforce Network-Based URL Filters"
 }] {
     true
 }
@@ -714,7 +742,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+	"CISControls" : "9.3: Maintain and Enforce Network-Based URL Filters"
 }] {
     true
 }

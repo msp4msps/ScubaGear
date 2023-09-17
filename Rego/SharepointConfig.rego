@@ -20,7 +20,8 @@ tests[{
     "Commandlet" : ["Get-SPOTenant", "Get-PnPTenant"],
     "ActualValue" : Policy.DefaultSharingLinkType,
     "ReportDetails" : ReportDetailsBoolean(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "3.3: Configure Data Access Control Lists"
 }] {
     Policy := input.SPO_tenant[_]
     Status := Policy.DefaultSharingLinkType == 1
@@ -42,7 +43,8 @@ tests[{
     "Commandlet" : ["Get-SPOTenant", "Get-PnPTenant"],
     "ActualValue" : Policy.SharingCapability,
     "ReportDetails" : ReportDetailsBoolean(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "3.3: Configure Data Access Control Lists"
 }] {
     Policy := input.SPO_tenant[_]
     Status := Policy.SharingCapability != 2
@@ -59,7 +61,8 @@ tests[{
 #    "Commandlet" : ["Get-SPOTenant", "Get-PnPTenant"],
 #    "ActualValue" : Policy.SharingDomainRestrictionMode,
 #    "ReportDetails" : ReportDetailsBoolean(Status),
-#    "RequirementMet" : Status
+#    "RequirementMet" : Status,
+     "CISControls" : "3.3: Configure Data Access Control Lists"
 #}] {
 #    Policy := input.SPO_tenant[_]
 #    Status := Policy.SharingDomainRestrictionMode == 1
@@ -76,7 +79,8 @@ tests[{
 #    "Commandlet" : ["Get-SPOTenant", "Get-PnPTenant"],
 #    "ActualValue" : [Policy.SharingCapability, Policy.SharingDomainRestrictionMode],
 #    "ReportDetails" : ReportDetails2_2(Policy),
-#    "RequirementMet" : Status
+#    "RequirementMet" : Status,
+      "CISControls" : "3.3: Configure Data Access Control Lists"
 #}] {
 #    Policy := input.SPO_tenant[_]
     # TODO: Missing Allow only users in specific security groups to share externally
@@ -98,7 +102,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Currently cannot be checked automatically. See Sharepoint Secure Configuration Baseline policy 2.3 for instructions on manual check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "3.12: Segment Data Processing and Storage Based on Sensitivity"
 }] {
     true
 }
@@ -152,7 +157,8 @@ tests[{
     "Commandlet" : ["Get-SPOTenant", "Get-PnPTenant"],
     "ActualValue" : [Policy.SharingCapability, Policy.ExternalUserExpirationRequired, Policy.ExternalUserExpireInDays],
     "ReportDetails" : ReportDetails2_4_1(Policy),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "6.2: Establish an Access Revoking Process"
 }] {
     Policy := input.SPO_tenant[_]
 
@@ -209,7 +215,8 @@ tests[{
     "Commandlet" : ["Get-SPOTenant", "Get-PnPTenant"],
     "ActualValue" : [Policy.SharingCapability, Policy.EmailAttestationRequired, Policy.EmailAttestationReAuthDays],
     "ReportDetails" : ReportDetails2_4_2(Policy),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "6.2: Establish an Access Revoking Process"
 }] {
     Policy := input.SPO_tenant[_]
 
@@ -239,7 +246,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Currently cannot be checked automatically. See Sharepoint Secure Configuration Baseline policy 2.5 for instructions on manual check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "2.7: Allowlist Authorized Scripts"
 }] {
     true
 }
@@ -255,7 +263,8 @@ tests[{
     "Commandlet" : ["Get-SPOSite", "Get-PnPTenantSite"],
     "ActualValue" : Policy.DenyAddAndCustomizePages,
     "ReportDetails" : ReportDetailsBoolean(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "2.7: Allowlist Authorized Scripts"
 }] {
     Policy := input.SPO_site[_]
     # 1 == Allow users to run custom script on self-service created sites

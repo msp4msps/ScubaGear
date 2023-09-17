@@ -25,7 +25,8 @@ tests[{
     "Commandlet" : ["Get-SPOTenant", "Get-PnPTenant"],
     "ActualValue" : Policies,
     "ReportDetails" : ReportDetailsBoolean(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "3.3: Configure Data Access Control Lists"
 }] {
     input.OneDrive_PnP_Flag == false
     Policies := AnyoneLinksPolicy
@@ -40,7 +41,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Currently cannot be checked automatically while using Service Principals. See Onedrive Secure Configuration Baseline policy 2.1 for instructions on manual check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "3.3: Configure Data Access Control Lists"
 }] {
     input.OneDrive_PnP_Flag
 }
@@ -78,7 +80,8 @@ tests[{
     "Commandlet" : ["Get-SPOTenant", "Get-PnPTenant"],
     "ActualValue" : [Policy.OneDriveSharingCapability, Policy.RequireAnonymousLinksExpireInDays],
     "ReportDetails" : ReportDetails2_2(Policy),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "6.2: Establish an Access Revoking Process"
 }] {
     Policy := input.SPO_tenant_info[_]
     Conditions1 := [Policy.OneDriveSharingCapability !=2]
@@ -96,7 +99,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Currently cannot be checked automatically while using Service Principals. See Onedrive Secure Configuration Baseline policy 2.2 for instructions on manual check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "6.2: Establish an Access Revoking Process"
 }] {
     input.OneDrive_PnP_Flag
 }
@@ -150,7 +154,8 @@ tests[{
     "Commandlet" : ["Get-SPOTenant", "Get-PnPTenant"],
     "ActualValue" : [Policy.OneDriveSharingCapability, Policy.FileAnonymousLinkType, Policy.FolderAnonymousLinkType],
     "ReportDetails" : ReportDetails2_3(Policy),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "3.3: Configure Data Access Control Lists"
 }] {
     Policy := input.SPO_tenant_info[_]
     Conditions1 := [Policy.OneDriveSharingCapability !=2]
@@ -168,7 +173,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Currently cannot be checked automatically while using Service Principals. See Onedrive Secure Configuration Baseline policy 2.3 for instructions on manual check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "3.3: Configure Data Access Control Lists"
 }] {
     input.OneDrive_PnP_Flag
 }
@@ -194,7 +200,8 @@ tests[{
     "Commandlet" : ["Get-SPOTenant", "Get-PnPTenant"],
     "ActualValue" : Policies,
     "ReportDetails" : ReportDetailsBoolean(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "3.3: Configure Data Access Control Lists"
 }] {
     Policies := DefinedDomainsPolicy
     Status := count(Policies) == 1
@@ -221,7 +228,8 @@ tests[{
     "Commandlet" : ["Get-SPOTenantSyncClientRestriction", "Get-PnPTenantSyncClientRestriction"],
     "ActualValue" : Policies,
     "ReportDetails" : ReportDetailsBoolean(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "13.5 Manage Access Control for Remote Assets"
 }] {
     Policies := ClientSyncPolicy
     Status := count(Policies) == 1
@@ -244,7 +252,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Currently cannot be checked automatically. See Onedrive Secure Configuration Baseline policy 2.6 for instructions on manual check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "13.5 Manage Access Control for Remote Assets"
 }] {
     true
 }
@@ -266,7 +275,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Currently cannot be checked automatically. See Onedrive Secure Configuration Baseline policy 2.7 for instructions on manual check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "4.8: Uninstall or Disable Unnecessary Services on Enterprise Assets and Software"
 }] {
     true
 }

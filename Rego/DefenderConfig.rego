@@ -83,7 +83,8 @@ tests[{
     "Commandlet" : ["Get-EOPProtectionPolicyRule"],
 	"ActualValue" : Policy,
     "ReportDetails" : CustomizeError(ReportDetails(Status), ErrorMessage),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     Policy := StandardPresetSecurityPolicy
     ErrorMessage := "The Standard Preset Security Policy is present and not disabled"
@@ -107,7 +108,8 @@ tests[{
     "Commandlet" : ["Get-EOPProtectionPolicyRule"],
 	"ActualValue" : Policy,
     "ReportDetails" : CustomizeError(ReportDetails(Status), ErrorMessage),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     Policy := StrictPresetSecurityPolicy
     ErrorMessage := "The Strict Preset Security Policy is present and not disabled"
@@ -171,7 +173,8 @@ tests[{
     "Commandlet" : ["Get-DlpComplianceRule"],
 	"ActualValue" : Rules,
     "ReportDetails" : CustomizeError(ReportDetails(Status), ErrorMessage),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "3.12: Segment Data Processing and Storage Based on Sensitivity"
 }] {
     Rules := SSNRules
     ErrorMessage := "No matching rule found for U.S. Social Security Number (SSN)"
@@ -185,7 +188,8 @@ tests[{
     "Commandlet" : ["Get-DlpComplianceRule"],
 	"ActualValue" : Rules,
     "ReportDetails" : CustomizeError(ReportDetails(Status), ErrorMessage),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "3.12: Segment Data Processing and Storage Based on Sensitivity"
 }] {
     Rules := ITINRules
     ErrorMessage := "No matching rule found for U.S. Individual Taxpayer Identification Number (ITIN)"
@@ -199,7 +203,8 @@ tests[{
     "Commandlet" : ["Get-DlpComplianceRule"],
 	"ActualValue" : Rules,
     "ReportDetails" : CustomizeError(ReportDetails(Status), ErrorMessage),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "3.12: Segment Data Processing and Storage Based on Sensitivity"
 }] {
     Rules := CardRules
     ErrorMessage := "No matching rule found for Credit Card Number"
@@ -266,7 +271,8 @@ tests[{
     "Commandlet" : ["Get-DLPCompliancePolicy"],
 	"ActualValue" : Policies,
     "ReportDetails" : CustomizeError(ReportDetails(Status), ErrorMessage),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "3.12: Segment Data Processing and Storage Based on Sensitivity"
 }] {
     Policies := ExchangePolicies
     ErrorMessage := "No policy found that applies to Exchange."
@@ -280,7 +286,8 @@ tests[{
     "Commandlet" : ["Get-DLPCompliancePolicy"],
 	"ActualValue" : Policies,
     "ReportDetails" : CustomizeError(ReportDetails(Status), ErrorMessage),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "3.12: Segment Data Processing and Storage Based on Sensitivity"
 }] {
     Policies := SharePointPolicies
     ErrorMessage := "No policy found that applies to SharePoint."
@@ -294,7 +301,8 @@ tests[{
     "Commandlet" : ["Get-DLPCompliancePolicy"],
 	"ActualValue" : Policies,
     "ReportDetails" : CustomizeError(ReportDetails(Status), ErrorMessage),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "3.12: Segment Data Processing and Storage Based on Sensitivity"
 }] {
     Policies := OneDrivePolicies
     ErrorMessage := "No policy found that applies to OneDrive."
@@ -308,7 +316,8 @@ tests[{
     "Commandlet" : ["Get-DLPCompliancePolicy"],
 	"ActualValue" : Policies,
     "ReportDetails" : CustomizeError(ReportDetails(Status), ErrorMessage),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "3.12: Segment Data Processing and Storage Based on Sensitivity"
 }] {
     Policies := TeamsPolicies
     ErrorMessage := "No policy found that applies to Teams."
@@ -345,7 +354,8 @@ tests[{
     "Commandlet" : ["Get-DlpComplianceRule"],
 	"ActualValue" : Rules,
     "ReportDetails" : CustomizeError(ReportDetails(Status), GenerateArrayString(Rules, ErrorMessage)),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "3.12: Segment Data Processing and Storage Based on Sensitivity"
 }] {
     Rules := SensitiveRulesNotBlocking
     ErrorMessage := "rule(s) found that do(es) not block access or associated policy not set to enforce block action:"
@@ -369,7 +379,8 @@ tests[{
     "Commandlet" : ["Get-DlpComplianceRule"],
 	"ActualValue" : Rules,
     "ReportDetails" : CustomizeError(ReportDetails(Status), GenerateArrayString(Rules, ErrorMessage)),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "14.4: Train Workforce on Data Handling Best Practices"
 }] {
     Rules := SensitiveRulesNotNotifying
     ErrorMessage := "rule(s) found that do(es) not notify at least one user:"
@@ -388,7 +399,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Currently cannot be checked automatically. See Defender Secure Configuration Baseline policy 2.2 for instructions on manual check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "3.3: Configure Data Access Control Lists"
 }] {
     true
 }
@@ -405,7 +417,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Currently cannot be checked automatically. See Defender Secure Configuration Baseline policy 2.2 for instructions on manual check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "3.3: Configure Data Access Control Lists"
 }] {
     true
 }
@@ -431,7 +444,8 @@ tests[{
     "Commandlet" : ["Get-MalwareFilterPolicy"],
 	"ActualValue" : Policies,
     "ReportDetails" : CustomizeError(ReportDetails(Status), GenerateArrayString(Policies, ErrorMessage)),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "9.6 Block Unnecessary File Types"
 }] {
     Policies := MalwarePoliciesWithoutFileFilter
     ErrorMessage := "malware policy(ies) found that do(es) not have the common attachments filter enabled:"
@@ -456,7 +470,8 @@ tests[{
     "Commandlet" : ["Get-MalwareFilterPolicy"],
 	"ActualValue" : Policies,
     "ReportDetails" : CustomizeError(ReportDetails(Status), ErrorMessage),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "9.6: Block Unnecessary File Types"
 }] {
     Policies := MalwarePoliciesBlockingEXE
     Status := count(Policies) > 0
@@ -477,7 +492,8 @@ tests[{
     "Commandlet" : ["Get-MalwareFilterPolicy"],
 	"ActualValue" : Policies,
     "ReportDetails" : CustomizeError(ReportDetails(Status), ErrorMessage),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "9.6: Block Unnecessary File Types"
 }] {
     Policies := MalwarePoliciesBlockingCMD
     Status := count(Policies) > 0
@@ -498,7 +514,8 @@ tests[{
     "Commandlet" : ["Get-MalwareFilterPolicy"],
 	"ActualValue" : Policies,
     "ReportDetails" : CustomizeError(ReportDetails(Status), ErrorMessage),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "9.6: Block Unnecessary File Types"
 }] {
     Policies := MalwarePoliciesBlockingVBE
     Status := count(Policies) > 0
@@ -526,7 +543,8 @@ tests[{
     "Commandlet" : ["Get-MalwareFilterPolicy"],
 	"ActualValue" : Policies,
     "ReportDetails" : CustomizeError(ReportDetails(Status), GenerateArrayString(Policies, ErrorMessage)),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+     "CISControls" : "9.7: Deploy and Maintain Email Server Anti-Malware Protections"
 }] {
     Policies := MalwarePoliciesWithoutZAP
     Status := count(Policies) == 0
@@ -561,7 +579,8 @@ tests[{
     "Commandlet" : ["Get-AntiPhishPolicy"],
 	"ActualValue" : Policies,
     "ReportDetails" : CustomizeError(ReportDetails(Status), ErrorMessage),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     Policies := ProtectedUsersPolicies
     ErrorMessage := "No users are included for targeted user protection."
@@ -592,7 +611,8 @@ tests[{
     "Commandlet" : ["Get-AntiPhishPolicy"],
 	"ActualValue" : Policies,
     "ReportDetails" : ReportDetails(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     Policies := ProtectedOrgDomainsPolicies
     Status := count(Policies) > 0
@@ -622,7 +642,8 @@ tests[{
     "Commandlet" : ["Get-AntiPhishPolicy"],
 	"ActualValue" : Policies,
     "ReportDetails" : CustomizeError(ReportDetails(Status), ErrorMessage),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     Policies := ProtectedCustomDomainsPolicies
     ErrorMessage := "The Custom Domains protection policies: Enabled, EnableTargetedDomainsProtection, and TargetedDomainsToProtect are not set correctly"
@@ -652,7 +673,8 @@ tests[{
     "Commandlet" : ["Get-AntiPhishPolicy"],
 	"ActualValue" : Policies,
     "ReportDetails" : ReportDetails(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     Policies := IntelligenceProtectionPolicies
     Status := count(Policies) > 0
@@ -670,7 +692,8 @@ tests[{
     "Commandlet" : ["Get-AntiPhishPolicy"],
 	"ActualValue" : Policy.TargetedUserProtectionAction,
     "ReportDetails" : ReportDetails(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     Policy := input.anti_phish_policies[_]
     Policy.Identity == "Office365 AntiPhish Default"
@@ -684,7 +707,8 @@ tests[{
     "Commandlet" : ["Get-AntiPhishPolicy"],
 	"ActualValue" : Policy.TargetedDomainProtectionAction,
     "ReportDetails" : ReportDetails(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     Policy := input.anti_phish_policies[_]
     Policy.Identity == "Office365 AntiPhish Default"
@@ -698,7 +722,8 @@ tests[{
     "Commandlet" : ["Get-AntiPhishPolicy"],
 	"ActualValue" : Policy.MailboxIntelligenceProtectionAction,
     "ReportDetails" : ReportDetails(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     Policy := input.anti_phish_policies[_]
     Policy.Identity == "Office365 AntiPhish Default"
@@ -722,7 +747,8 @@ tests[ {
     "Commandlet" : ["Get-AntiPhishPolicy"],
 	"ActualValue" : Policies,
     "ReportDetails" : CustomizeError(ReportDetails(Status), GenerateArrayString(Policies, ErrorMessage)),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     Policies := AntiPhishTargetedUserNotQuarantine
     ErrorMessage := "non-default anti phish policy(ies) found where the action for messages detected as user impersonation is not quarantine:"
@@ -744,7 +770,8 @@ tests[ {
     "Commandlet" : ["Get-AntiPhishPolicy"],
 	"ActualValue" : Policies,
     "ReportDetails" : CustomizeError(ReportDetails(Status), GenerateArrayString(Policies, ErrorMessage)),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     Policies := AntiPhishTargetedDomainNotQuarantine
     ErrorMessage := "non-default anti phish policy(ies) found where the action for messages detected as domain impersonation is not quarantine:"
@@ -766,7 +793,8 @@ tests[ {
     "Commandlet" : ["Get-AntiPhishPolicy"],
 	"ActualValue" : Policies,
     "ReportDetails" : CustomizeError(ReportDetails(Status), GenerateArrayString(Policies, ErrorMessage)),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     Policies := AntiPhishMailIntNotQuarantine
     ErrorMessage := "non-default anti phish policy(ies) found where the action for messages flagged by mailbox intelligence is not quarantine:"
@@ -787,7 +815,8 @@ tests[ {
     "Commandlet" : ["Get-AntiPhishPolicy"],
 	"ActualValue" : Policy.AuthenticationFailAction,
     "ReportDetails" : ReportDetails(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     Policy := input.anti_phish_policies[_]
     Policy.Identity == "Office365 AntiPhish Default"
@@ -811,7 +840,8 @@ tests[ {
     "Commandlet" : ["Get-AntiPhishPolicy"],
 	"ActualValue" : Policies,
     "ReportDetails" : CustomizeError(ReportDetails(Status), GenerateArrayString(Policies, ErrorMessage)),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     ErrorMessage := "custom anti phish policy(ies) found where the action for spoofed emails is not set to quarantine:"
     Policies := CustomAntiPhishSpoofNotQuarantine
@@ -830,7 +860,8 @@ tests[ {
     "Commandlet" : ["Get-AntiPhishPolicy"],
 	"ActualValue" : Policy.EnableFirstContactSafetyTips,
     "ReportDetails" : ReportDetails(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     Policy := input.anti_phish_policies[_]
     Policy.Identity == "Office365 AntiPhish Default"
@@ -853,7 +884,8 @@ tests[{
     "Commandlet" : ["Get-AntiPhishPolicy"],
 	"ActualValue" : Policies,
     "ReportDetails" : CustomizeError(ReportDetails(Status), GenerateArrayString(Policies, ErrorMessage)),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     ErrorMessage := "custom anti phish policy(ies) found where first contact safety tips are not enabled:"
     Policies := CustomAntiPhishNoSafetyTips
@@ -868,7 +900,8 @@ tests[{
     "Commandlet" : ["Get-AntiPhishPolicy"],
 	"ActualValue" : Policy.EnableSimilarUsersSafetyTips,
     "ReportDetails" : ReportDetails(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     Policy := input.anti_phish_policies[_]
     Policy.Identity == "Office365 AntiPhish Default"
@@ -891,7 +924,8 @@ tests[{
     "Commandlet" : ["Get-AntiPhishPolicy"],
 	"ActualValue" : Policies,
     "ReportDetails" : CustomizeError(ReportDetails(Status), GenerateArrayString(Policies, ErrorMessage)),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     ErrorMessage := "custom anti phish policy(ies) found where similar user safety tips are not enabled:"
     Policies := CustomAntiPhishNoSimilarUserTips
@@ -906,7 +940,8 @@ tests[{
     "Commandlet" : ["Get-AntiPhishPolicy"],
 	"ActualValue" : Policy.EnableSimilarDomainsSafetyTips,
     "ReportDetails" : ReportDetails(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     Policy := input.anti_phish_policies[_]
     Policy.Identity == "Office365 AntiPhish Default"
@@ -929,7 +964,8 @@ tests[{
     "Commandlet" : ["Get-AntiPhishPolicy"],
 	"ActualValue" : Policies,
     "ReportDetails" : CustomizeError(ReportDetails(Status), GenerateArrayString(Policies, ErrorMessage)),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     ErrorMessage := "custom anti phish policy(ies) found where similar domains safety tips are not enabled:"
     Policies := CustomAntiPhishNoSimilarDomainTips
@@ -944,7 +980,8 @@ tests[{
     "Commandlet" : ["Get-AntiPhishPolicy"],
 	"ActualValue" : Policy.EnableUnusualCharactersSafetyTips,
     "ReportDetails" : ReportDetails(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     Policy := input.anti_phish_policies[_]
     Policy.Identity == "Office365 AntiPhish Default"
@@ -967,7 +1004,8 @@ tests[{
     "Commandlet" : ["Get-AntiPhishPolicy"],
 	"ActualValue" : Policies,
     "ReportDetails" : CustomizeError(ReportDetails(Status), GenerateArrayString(Policies, ErrorMessage)),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     ErrorMessage := "custom anti phish policy(ies) found where unusual character safety tips are not enabled:"
     Policies := CustomAntiPhishNoUnusualCharTips
@@ -982,7 +1020,8 @@ tests[{
     "Commandlet" : ["Get-AntiPhishPolicy"],
 	"ActualValue" : Policy.EnableViaTag,
     "ReportDetails" : ReportDetails(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     Policy := input.anti_phish_policies[_]
     Policy.Identity == "Office365 AntiPhish Default"
@@ -1005,7 +1044,8 @@ tests[{
     "Commandlet" : ["Get-AntiPhishPolicy"],
 	"ActualValue" : Policies,
     "ReportDetails" : CustomizeError(ReportDetails(Status), GenerateArrayString(Policies, ErrorMessage)),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     ErrorMessage := "custom anti phish policy(ies) found where via tag is not enabled:"
     Policies := CustomAntiPhishNoViaTagTips
@@ -1020,7 +1060,8 @@ tests[{
     "Commandlet" : ["Get-AntiPhishPolicy"],
 	"ActualValue" : Policy.EnableUnauthenticatedSender,
     "ReportDetails" : ReportDetails(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     Policy := input.anti_phish_policies[_]
     Policy.Identity == "Office365 AntiPhish Default"
@@ -1043,7 +1084,8 @@ tests[{
     "Commandlet" : ["Get-AntiPhishPolicy"],
 	"ActualValue" : Policies,
     "ReportDetails" : CustomizeError(ReportDetails(Status), GenerateArrayString(Policies, ErrorMessage)),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     ErrorMessage := "custom anti phish policy(ies) found where '?' for unauthenticated sender is not enabled:"
     Policies := CustomAntiPhishNoUnauthSenderTips
@@ -1067,7 +1109,8 @@ tests[{
     "Commandlet" : ["Get-HostedContentFilterPolicy"],
 	"ActualValue" : Policy.BulkThreshold,
 	"ReportDetails" : ReportDetails(Status),
-	"RequirementMet" : Status
+	"RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
 	Policy := input.hosted_content_filter_policies[_] # Refactor
     Policy.Identity == "Default"
@@ -1087,7 +1130,8 @@ tests[{
     "Commandlet" : ["Get-HostedContentFilterPolicy"],
     "ActualValue" : Policies,
     "ReportDetails" : CustomizeError(ReportDetails(Status), GenerateArrayString(Policies, ErrorMessage)),
-	"RequirementMet" : Status
+	"RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
 	ErrorMessage := "custom anti-spam policy(ies) found where bulk complaint level threshold is set to 7 or more:"
 	Policies = CustomBulkThresholdWrong
@@ -1106,7 +1150,8 @@ tests[{
     "Commandlet" : ["Get-HostedContentFilterPolicy"],
     "ActualValue" : Policy.SpamAction,
     "ReportDetails" : ReportDetails(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     Policy := input.hosted_content_filter_policies[_]
     Policy.Identity == "Default"
@@ -1120,7 +1165,8 @@ tests[{
     "Commandlet" : ["Get-HostedContentFilterPolicy"],
     "ActualValue" : Policy.HighConfidenceSpamAction,
     "ReportDetails" : ReportDetails(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     Policy := input.hosted_content_filter_policies[_]
     Policy.Identity == "Default"
@@ -1141,7 +1187,8 @@ tests[{
     "Commandlet" : ["Get-HostedContentFilterPolicy"],
     "ActualValue" : Policies,
     "ReportDetails" : CustomizeError(ReportDetails(Status), GenerateArrayString(Policies, ErrorMessage)),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
 	ErrorMessage := "custom anti-spam policy(ies) found where spam is not being sent to the Quarantine folder or the Junk Mail Folder:"
 	Policies = CustomSpamActionWrong
@@ -1161,7 +1208,8 @@ tests[{
     "Commandlet" : ["Get-HostedContentFilterPolicy"],
     "ActualValue" : Policies,
     "ReportDetails" : CustomizeError(ReportDetails(Status), GenerateArrayString(Policies, ErrorMessage)),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
 	ErrorMessage := "custom anti-spam policy(ies) found where high confidence spam is not being sent to the Quarantine folder or the Junk Mail Folder:"
 	Policies = CustomHighConfidenceSpamActionWrong
@@ -1180,7 +1228,8 @@ tests[{
     "Commandlet" : ["Get-HostedContentFilterPolicy"],
     "ActualValue" : Policy.PhishSpamAction,
     "ReportDetails" : ReportDetails(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     Policy := input.hosted_content_filter_policies[_]
     Policy.Identity == "Default"
@@ -1194,7 +1243,8 @@ tests[{
     "Commandlet" : ["Get-HostedContentFilterPolicy"],
     "ActualValue" : Policy.HighConfidencePhishAction,
     "ReportDetails" : ReportDetails(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     Policy := input.hosted_content_filter_policies[_]
     Policy.Identity == "Default"
@@ -1216,7 +1266,8 @@ tests[{
     "Commandlet" : ["Get-HostedContentFilterPolicy"],
     "ActualValue" : Policies,
     "ReportDetails" : CustomizeError(ReportDetails(Status), GenerateArrayString(Policies, ErrorMessage)),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     ErrorMessage := "custom anti-spam policy(ies) found where phishing isn't moved to the quarantine folder:"
     Policies = CustomPhishSpamActionWrong
@@ -1236,7 +1287,8 @@ tests[{
     "Commandlet" : ["Get-HostedContentFilterPolicy"],
     "ActualValue" : Policies,
     "ReportDetails" : CustomizeError(ReportDetails(Status), GenerateArrayString(Policies, ErrorMessage)),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     ErrorMessage := "custom anti-spam policy(ies) found where high-confidence phishing isn't moved to quarantine folder:"
     Policies = CustomHighConfidencePhishActionWrong
@@ -1253,7 +1305,8 @@ tests[{
     "Commandlet" : ["Get-HostedContentFilterPolicy"],
     "ActualValue" : Policy.BulkSpamAction,
     "ReportDetails" : ReportDetails(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     Policy := input.hosted_content_filter_policies[_]
     Policy.Identity == "Default"
@@ -1273,7 +1326,8 @@ tests[{
     "Commandlet" : ["Get-HostedContentFilterPolicy"],
     "ActualValue" : Policies,
     "ReportDetails" : CustomizeError(ReportDetails(Status), GenerateArrayString(Policies, ErrorMessage)),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     ErrorMessage := "custom anti-spam policy(ies) found where bulk spam action is not Quarantine or Move to Junk Email Folder"
     Policies = CustomBulkSpamActionWrong
@@ -1291,7 +1345,8 @@ tests[{
     "Commandlet" : ["Get-HostedContentFilterPolicy"],
     "ActualValue" : Policy.QuarantineRetentionPeriod,
     "ReportDetails" : ReportDetails(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "3.4: Enforce Data Retention"
 }] {
     Policy := input.hosted_content_filter_policies[_]
     Policy.Identity == "Default"
@@ -1311,7 +1366,8 @@ tests[{
     "Commandlet" : ["Get-HostedContentFilterPolicy"],
     "ActualValue" : Policies,
     "ReportDetails" : CustomizeError(ReportDetails(Status), GenerateArrayString(Policies, ErrorMessage)),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "3.4: Enforce Data Retention"
 }] {
     ErrorMessage := "custom anti-spam policy(ies) found where spam in quarantine isn't retained for 30 days:"
     Policies = CustomQuarantineRetentionPeriodWrong
@@ -1329,7 +1385,8 @@ tests[{
     "Commandlet" : ["Get-HostedContentFilterPolicy"],
     "ActualValue" : Policy.InlineSafetyTipsEnabled,
     "ReportDetails" : ReportDetails(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     Policy := input.hosted_content_filter_policies[_]
     Policy.Identity == "Default"
@@ -1349,7 +1406,8 @@ tests[{
     "Commandlet" : ["Get-HostedContentFilterPolicy"],
     "ActualValue" : Policies,
     "ReportDetails" : CustomizeError(ReportDetails(Status), GenerateArrayString(Policies, ErrorMessage)),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     ErrorMessage := "custom anti-spam policy(ies) found where spam safety tips is disabled:"
     Policies = CustomInlineSafetyTipsDisabled
@@ -1368,7 +1426,8 @@ tests[{
     "Commandlet" : ["Get-HostedContentFilterPolicy"],
     "ActualValue" : Policy.ZapEnabled,
     "ReportDetails" : ReportDetails(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     Policy := input.hosted_content_filter_policies[_]
     Policy.Identity == "Default"
@@ -1382,7 +1441,8 @@ tests[{
     "Commandlet" : ["Get-HostedContentFilterPolicy"],
     "ActualValue" : Policy.SpamZapEnabled,
     "ReportDetails" : ReportDetails(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     Policy := input.hosted_content_filter_policies[_]
     Policy.Identity == "Default"
@@ -1396,7 +1456,8 @@ tests[{
     "Commandlet" : ["Get-HostedContentFilterPolicy"],
     "ActualValue" : Policy.PhishZapEnabled,
     "ReportDetails" : ReportDetails(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     Policy := input.hosted_content_filter_policies[_]
     Policy.Identity == "Default"
@@ -1417,7 +1478,8 @@ tests[{
     "Commandlet" : ["Get-HostedContentFilterPolicy"],
     "ActualValue" : Policies,
     "ReportDetails" : CustomizeError(ReportDetails(Status), GenerateArrayString(Policies, ErrorMessage)),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     ErrorMessage := "custom anti-spam policies found where Zero-hour auto purge is disabled:"
     Policies = CustomZapDisabled
@@ -1437,7 +1499,8 @@ tests[{
     "Commandlet" : ["Get-HostedContentFilterPolicy"],
     "ActualValue" : Policies,
     "ReportDetails" : CustomizeError(ReportDetails(Status), GenerateArrayString(Policies, ErrorMessage)),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     ErrorMessage := "custom anti-spam policies found where Zero-hour auto purge for spam is disabled:"
     Policies = CustomSpamZapDisabled
@@ -1457,7 +1520,8 @@ tests[{
     "Commandlet" : ["Get-HostedContentFilterPolicy"],
     "ActualValue" : Policies,
     "ReportDetails" : CustomizeError(ReportDetails(Status), GenerateArrayString(Policies, ErrorMessage)),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     ErrorMessage := "custom anti-spam policy(ies) found where Zero-hour auto purge for phishing is disabled:"
     Policies = CustomPhishZapDisabled
@@ -1480,7 +1544,8 @@ tests[{
     "Commandlet" : ["Get-HostedContentFilterPolicy"],
     "ActualValue" : Policies,
     "ReportDetails" : CustomizeError(ReportDetails(Status), GenerateArrayString(Policies, ErrorMessage)),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     ErrorMessage := "custom anti-spam policy(ies) found where there is at least one allowed sender domain:"
     Policies = AllowedSenderDomainsNotEmpty
@@ -1499,7 +1564,8 @@ tests[{
     "Commandlet" : ["Get-HostedContentFilterPolicy"],
     "ActualValue" : Policies,
     "ReportDetails" : CustomizeError(ReportDetails(Status), GenerateArrayString(Policies, ErrorMessage)),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     ErrorMessage := "custom policy(ies) found where there is at least one allowed sender domain:"
     Policies = AllowedSenderDomainsNotEmptyCustom
@@ -1533,7 +1599,8 @@ tests[{
     "Commandlet" : ["Get-SafeLinksRule", "Get-AcceptedDomain"],
 	"ActualValue" : AllDomainsSafeLinksPolicies,
     "ReportDetails" : ApplyLicenseWarning(CustomizeError(ReportDetails(Status), ErrorMessage)),
-	"RequirementMet" : Status
+	"RequirementMet" : Status,
+    "CISControls" : "9.3: Maintain and Enforce Network-Based URL Filters"
 }] {
 	DomainNames := {Name.DomainName | Name = input.all_domains[_]}
     ErrorMessage := concat("", ["No policy found that applies to all domains: ", concat(", ", DomainNames)])
@@ -1560,7 +1627,8 @@ tests[{
     "Commandlet" : ["Get-SafeLinksPolicy", "Get-SafeLinksRule"],
 	"ActualValue" : Policies,
     "ReportDetails" : ApplyLicenseWarning(ReportDetails(Status)),
-	"RequirementMet" : Status
+	"RequirementMet" : Status,
+    "CISControls" : "9.3: Maintain and Enforce Network-Based URL Filters"
 }] {
 	Policies := EnableSafeLinksForEmailCorrect
     Status := count(Policies) >= 1
@@ -1586,7 +1654,8 @@ tests[{
     "Commandlet" : ["Get-SafeLinksPolicy", "Get-SafeLinksRule"],
 	"ActualValue" : Policies,
     "ReportDetails" : ApplyLicenseWarning(ReportDetails(Status)),
-	"RequirementMet" : Status
+	"RequirementMet" : Status,
+    "CISControls" : "9.3: Maintain and Enforce Network-Based URL Filters"
 }] {
 	Policies := EnableSafeLinksForTeamsCorrect
     Status := count(Policies) >= 1
@@ -1612,7 +1681,8 @@ tests[{
     "Commandlet" : ["Get-SafeLinksPolicy", "Get-SafeLinksRule"],
 	"ActualValue" : Policies,
     "ReportDetails" : ApplyLicenseWarning(ReportDetails(Status)),
-	"RequirementMet" : Status
+	"RequirementMet" : Status,
+    "CISControls" : "9.3: Maintain and Enforce Network-Based URL Filters"
 }] {
 	Policies := ScanUrlsCorrect
     Status := count(Policies) >= 1
@@ -1638,7 +1708,8 @@ tests[{
     "Commandlet" : ["Get-SafeLinksPolicy", "Get-SafeLinksRule"],
 	"ActualValue" : Policies,
     "ReportDetails" : ApplyLicenseWarning(ReportDetails(Status)),
-	"RequirementMet" : Status
+	"RequirementMet" : Status,
+    "CISControls" : "9.3: Maintain and Enforce Network-Based URL Filters"
 }] {
 	Policies := DeliverMessageAfterScanCorrect
     Status := count(Policies) >= 1
@@ -1664,7 +1735,8 @@ tests[{
     "Commandlet" : ["Get-SafeLinksPolicy", "Get-SafeLinksRule"],
 	"ActualValue" : Policies,
     "ReportDetails" : ApplyLicenseWarning(ReportDetails(Status)),
-	"RequirementMet" : Status
+	"RequirementMet" : Status,
+    "CISControls" : "9.3: Maintain and Enforce Network-Based URL Filters"
 }] {
 	Policies := EnableForInternalSendersCorrect
     Status := count(Policies) >= 1
@@ -1690,7 +1762,8 @@ tests[{
     "Commandlet" : ["Get-SafeLinksPolicy", "Get-SafeLinksRule"],
 	"ActualValue" : Policies,
     "ReportDetails" : ApplyLicenseWarning(ReportDetails(Status)),
-	"RequirementMet" : Status
+	"RequirementMet" : Status,
+    "CISControls" : "9.3: Maintain and Enforce Network-Based URL Filters"
 }] {
 	Policies := TrackClicksCorrect
     Status := count(Policies) >= 1
@@ -1715,7 +1788,8 @@ tests[{
     "Commandlet" : ["Get-SafeLinksPolicy", "Get-SafeLinksRule"],
 	"ActualValue" : Policies,
     "ReportDetails" : ApplyLicenseWarning(ReportDetails(Status)),
-	"RequirementMet" : Status
+	"RequirementMet" : Status,
+    "CISControls" : "9.3: Maintain and Enforce Network-Based URL Filters"
 }] {
 	Policies := EnableSafeLinksForOfficeCorrect
     Status := count(Policies) >= 1
@@ -1740,7 +1814,8 @@ tests[{
     "Commandlet" : ["Get-SafeLinksPolicy", "Get-SafeLinksRule"],
 	"ActualValue" : Policies,
     "ReportDetails" : ApplyLicenseWarning(ReportDetails(Status)),
-	"RequirementMet" : Status
+	"RequirementMet" : Status,
+    "CISControls" : "9.3: Maintain and Enforce Network-Based URL Filters"
 }] {
 	Policies := AllowClickThroughCorrect
     Status := count(Policies) >= 1
@@ -1773,7 +1848,8 @@ tests[{
     "Commandlet" : ["Get-SafeAttachmentRule", "Get-AcceptedDomain"],
 	"ActualValue" : AllDomainsSafeAttachmentRules,
     "ReportDetails" : ApplyLicenseWarning(CustomizeError(ReportDetails(Status), ErrorMessage)),
-	"RequirementMet" : Status
+	"RequirementMet" : Status,
+    "CISControls" : "9.7: Deploy and Maintain Email Server Anti-Malware Protections"
 }] {
 	DomainNames := {Name.DomainName | Name = input.all_domains[_]}
     ErrorMessage := concat("", ["No policy found that applies to all domains: ", concat(", ", DomainNames)])
@@ -1807,7 +1883,8 @@ tests[{
     "Commandlet" : ["Get-SafeAttachmentPolicy", "Get-SafeAttachmentRule", "Get-AcceptedDomain"],
 	"ActualValue" : Policies,
     "ReportDetails" : ApplyLicenseWarning(CustomizeError(ReportDetails(Status), ErrorMessage)),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "9.7: Deploy and Maintain Email Server Anti-Malware Protections"
 }] {
     Policies := BlockMalwarePolicies
     ErrorMessage := "No enabled policy found with action set to block that apply to all domains"
@@ -1834,7 +1911,8 @@ tests[{
     "Commandlet" : ["Get-SafeAttachmentPolicy", "Get-SafeAttachmentRule", "Get-AcceptedDomain"],
 	"ActualValue" : Policies,
     "ReportDetails" : ApplyLicenseWarning(CustomizeError(ReportDetails(Status), ErrorMessage)),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "9.7: Deploy and Maintain Email Server Anti-Malware Protections"
 }] {
     Policies := RedirectionPolicies
     ErrorMessage := "No enabled policy found with action set to block and at least one contact specified"
@@ -1860,7 +1938,8 @@ tests[{
     "Commandlet" : ["Get-AtpPolicyForO365"],
 	"ActualValue" : Policies,
     "ReportDetails" : ApplyLicenseWarning(ReportDetails(Status)),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "9.7: Deploy and Maintain Email Server Anti-Malware Protections"
 }] {
     Policies := ATPPolicies
     Status := count(Policies) > 0
@@ -1900,7 +1979,8 @@ tests[{
     "Commandlet" : ["Get-ProtectionAlert"],
 	"ActualValue" : MissingAlerts,
     "ReportDetails" : CustomizeError(ReportDetails(Status), GenerateArrayString(MissingAlerts, ErrorMessage)),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     MissingAlerts := RequiredAlerts - EnabledAlerts
     ErrorMessage := "disabled required alert(s) found:"
@@ -1919,7 +1999,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Currently cannot be checked automatically. See Defender Secure Configuration Baseline policy 2.9 for instructions on manual check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "13.1: Centralize Security Event Alerting"
 }] {
     true
 }
@@ -1948,7 +2029,8 @@ tests[{
     "Commandlet" : ["Get-AdminAuditLogConfig"],
 	"ActualValue" : CorrectLogConfigs,
     "ReportDetails" : ReportDetails(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "8.2 Collect Audit Logs"
 }] {
     Status := count(CorrectLogConfigs) >= 1
 }
@@ -1967,7 +2049,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Currently cannot be checked automatically. See Defender Secure Configuration Baseline policy 2.10 for instructions on manual check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "8.5: Collect Detailed Audit Logs"
 }] {
     true
 }
@@ -1986,7 +2069,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Currently cannot be checked automatically. See Defender Secure Configuration Baseline policy 2.10 for instructions on manual check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "8.10: Retain Audit Logs"
 }] {
     true
 }

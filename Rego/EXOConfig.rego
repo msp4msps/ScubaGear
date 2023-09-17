@@ -58,7 +58,8 @@ tests[{
     "Commandlet" : ["Get-RemoteDomain"],
     "ActualValue" : Domains,
     "ReportDetails" : ReportDetailsString(Status, ErrorMessage),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     Domains := RemoteDomainsAllowingForwarding
     ErrorMessage := Description(Format(Domains), "remote domain(s) that allows automatic forwarding:", concat(", ", Domains))
@@ -82,7 +83,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Currently cannot be checked automatically. See Exchange Online Secure Configuration Baseline policy 2.# for instructions on manual check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     true
 }
@@ -104,7 +106,8 @@ tests[{
     "Commandlet" : ["Get-ScubaSpfRecords", "Get-AcceptedDomain"],
     "ActualValue" : Domains,
     "ReportDetails" : ReportDetailsArray(Status, Domains, AllDomains),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "9.5: Implement DMARC"
 }] {
     Domains := DomainsWithoutSpf
     Status := count(Domains) == 0
@@ -135,7 +138,8 @@ tests[{
     "Commandlet" : ["Get-DkimSigningConfig", "Get-ScubaDkimRecords", "Get-AcceptedDomain"],
     "ActualValue" : [input.dkim_records, input.dkim_config],
     "ReportDetails" : ReportDetailsArray(Status, DomainsWithoutDkim, CustomDomains),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "9.5: Implement DMARC"
 }] {
     DomainsWithoutDkim := CustomDomains - DomainsWithDkim
     Status := count(DomainsWithoutDkim) == 0
@@ -163,7 +167,8 @@ tests[{
     "Commandlet" : ["Get-ScubaDmarcRecords", "Get-AcceptedDomain"],
     "ActualValue" : input.dmarc_records,
     "ReportDetails" : ReportDetailsArray(Status, Domains, AllDomains),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "9.5: Implement DMARC"
 }] {
     Domains := DomainsWithoutDmarc
     Status := count(Domains) == 0
@@ -186,7 +191,8 @@ tests[{
     "Commandlet" : ["Get-ScubaDmarcRecords", "Get-AcceptedDomain"],
     "ActualValue" : input.dmarc_records,
     "ReportDetails" : ReportDetailsArray(Status, Domains, AllDomains),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "9.5: Implement DMARC"
 }] {
     Domains := DomainsWithoutPreject
     Status := count(Domains) == 0
@@ -209,7 +215,8 @@ tests[{
     "Commandlet" : ["Get-ScubaDmarcRecords", "Get-AcceptedDomain"],
     "ActualValue" : input.dmarc_records,
     "ReportDetails" : ReportDetailsArray(Status, Domains, AllDomains),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "9.5: Implement DMARC"
 }] {
     Domains := DomainsWithoutDHSContact
     Status := count(Domains) == 0
@@ -232,7 +239,8 @@ tests[{
     "Commandlet" : ["Get-ScubaDmarcRecords", "Get-AcceptedDomain"],
     "ActualValue" : input.dmarc_records,
     "ReportDetails" : ReportDetailsArray(Status, Domains, AllDomains),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "17.1: Designate Personnel to Manage Incident Handling"
 }] {
     Domains := DomainsWithoutAgencyContact
     Status := count(Domains) == 0
@@ -260,7 +268,8 @@ tests[{
     "Commandlet" : ["Get-TransportConfig"],
     "ActualValue" : input.transport_config,
     "ReportDetails" : ReportDetailsBoolean(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.8: Uninstall or Disable Unnecessary Services on Enterprise Assets and Software"
 }] {
     Status := count(SmtpClientAuthEnabled) == 0
 }
@@ -291,7 +300,8 @@ tests[{
     "Commandlet" : ["Get-SharingPolicy"],
     "ActualValue" : input.sharing_policy,
     "ReportDetails" : ReportDetailsString(Status, ErrorMessage),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.8: Uninstall or Disable Unnecessary Services on Enterprise Assets and Software"
 }] {
     ErrorMessage := "Wildcard domain (\"*\") in shared domains list, enabling sharing with all domains by default"
 
@@ -310,7 +320,8 @@ tests[{
     "Commandlet" : ["Get-SharingPolicy"],
     "ActualValue" : input.sharing_policy,
     "ReportDetails" : ReportDetailsString(Status, ErrorMessage),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.8: Uninstall or Disable Unnecessary Services on Enterprise Assets and Software"
 }] {
     ErrorMessage := "Wildcard domain (\"*\") in shared domains list, enabling sharing with all domains by default"
     Status := count(SharingPolicyAllowedSharing) == 0
@@ -331,7 +342,8 @@ tests[{
     "Commandlet" : ["Get-TransportRule"],
     "ActualValue" : [Rule.FromScope | Rule = Rules[_]],
     "ReportDetails" : ReportDetailsString(Status, ErrorMessage),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     Rules := input.transport_rule
     ErrorMessage := "No transport rule found that applies warnings to emails received from outside the organization"
@@ -357,7 +369,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "3.13: Deploy a Data Loss Prevention Solution"
 }] {
     true
 }
@@ -374,7 +387,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "3.13: Deploy a Data Loss Prevention Solution"
 }] {
     true
 }
@@ -396,7 +410,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "9.6: Block Unnecessary File Types"
 }] {
     true
 }
@@ -413,7 +428,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "9.6: Block Unnecessary File Types"
 }] {
     true
 }
@@ -430,7 +446,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "9.6: Block Unnecessary File Types"
 }] {
     true
 }
@@ -452,7 +469,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "9.7: Deploy and Maintain Email Server Anti-Malware Protections"
 }] {
     true
 }
@@ -469,7 +487,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "9.7: Deploy and Maintain Email Server Anti-Malware Protections"
 }] {
     true
 }
@@ -486,7 +505,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "9.7: Deploy and Maintain Email Server Anti-Malware Protections"
 }] {
     true
 }
@@ -508,7 +528,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "13.3: Deploy a Network Intrusion Detection Solution"
 }] {
     true
 }
@@ -525,7 +546,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "13.3: Deploy a Network Intrusion Detection Solution"
 }] {
     true
 }
@@ -542,7 +564,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "13.3: Deploy a Network Intrusion Detection Solution"
 }] {
     true
 }
@@ -569,7 +592,8 @@ tests[{
     "Commandlet" : ["Get-HostedConnectionFilterPolicy"],
     "ActualValue" : input.conn_filter,
     "ReportDetails" : ReportDetailsString(Status, ErrorMessage),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.2 Establish and Maintain a Secure Configuration Process for Network Infrastructure"
 }]{
     ErrorMessage := "Allow-list is in use"
     Status := count(ConnFiltersWithIPAllowList) == 0
@@ -592,7 +616,8 @@ tests[{
     "Commandlet" : ["Get-HostedConnectionFilterPolicy"],
     "ActualValue" : input.conn_filter,
     "ReportDetails" : ReportDetailsBoolean(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }]{
     Status := count(ConnFiltersWithSafeList) == 0
 }
@@ -618,7 +643,8 @@ tests[{
     "Commandlet" : ["Get-OrganizationConfig"],
     "ActualValue" : input.org_config,
     "ReportDetails" : ReportDetailsBoolean(Status),
-    "RequirementMet" : Status
+    "RequirementMet" : Status,
+    "CISControls" : "8.2: Collect Audit Logs"
 }] {
     Status := count(AuditEnabled) == 0
 }
@@ -640,7 +666,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     true
 }
@@ -657,7 +684,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     true
 }
@@ -674,7 +702,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "4.1: Establish and Maintain a Secure Configuration Process"
 }] {
     true
 }
@@ -696,7 +725,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "9.3: Maintain and Enforce Network-Based URL Filters"
 }] {
     true
 }
@@ -713,7 +743,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "9.3: Maintain and Enforce Network-Based URL Filters"
 }] {
     true
 }
@@ -730,7 +761,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "9.3: Maintain and Enforce Network-Based URL Filters"
 }] {
     true
 }
@@ -752,7 +784,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "13.1: Centralize Security Event Alerting"
 }] {
     true
 }
@@ -769,7 +802,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "13.1: Centralize Security Event Alerting"
 }] {
     true
 }
@@ -791,7 +825,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "8.9: Centralize Audit Logs"
 }] {
     true
 }
@@ -808,7 +843,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "8.5: Collect Detailed Audit Logs"
 }] {
     true
 }
@@ -825,7 +861,8 @@ tests[{
     "Commandlet" : [],
     "ActualValue" : [],
     "ReportDetails" : "Custom implementation allowed. If you are using Defender to fulfill this requirement, run the Defender version of this script. Otherwise, use a 3rd party tool OR manually check",
-    "RequirementMet" : false
+    "RequirementMet" : false,
+    "CISControls" : "8.10: Retain Audit Logs"
 }] {
     true
 }
