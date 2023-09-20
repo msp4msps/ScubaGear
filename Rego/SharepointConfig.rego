@@ -62,7 +62,7 @@ tests[{
 #    "ActualValue" : Policy.SharingDomainRestrictionMode,
 #    "ReportDetails" : ReportDetailsBoolean(Status),
 #    "RequirementMet" : Status,
-     "CISControls" : "3.3: Configure Data Access Control Lists"
+#    "CISControls" : "3.3: Configure Data Access Control Lists"
 #}] {
 #    Policy := input.SPO_tenant[_]
 #    Status := Policy.SharingDomainRestrictionMode == 1
@@ -80,7 +80,7 @@ tests[{
 #    "ActualValue" : [Policy.SharingCapability, Policy.SharingDomainRestrictionMode],
 #    "ReportDetails" : ReportDetails2_2(Policy),
 #    "RequirementMet" : Status,
-      "CISControls" : "3.3: Configure Data Access Control Lists"
+#     "CISControls" : "3.3: Configure Data Access Control Lists"
 #}] {
 #    Policy := input.SPO_tenant[_]
     # TODO: Missing Allow only users in specific security groups to share externally
